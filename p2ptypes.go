@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"crypto/sha256"
@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	"github.com/eoscanada/eos-go/ecc"
 	"github.com/tidwall/gjson"
 )
 
@@ -337,7 +337,7 @@ func (p *ProducerScheduleOrAuthoritySchedule) UnmarshalJSON(data []byte) error {
 	}
 
 	// We cannot infer anything, what should we do exactly? We could populate the two, but
-	// what happens on marshal? Both are defined, that's what we choose for now, `zswchain-go` user
+	// what happens on marshal? Both are defined, that's what we choose for now, `eoschain-go` user
 	// would then make the choice themselves.
 	if len(producersResult.Array()) == 0 || producersResult.Get("0.block_signing_key").Exists() {
 		p.V1 = new(ProducerSchedule)

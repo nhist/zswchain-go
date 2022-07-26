@@ -1,19 +1,19 @@
 package system
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
 // NewRegProxy returns a `regproxy` action that lives on the
 // `zswhq.system` contract.
-func NewRegProxy(proxy zsw.AccountName, isProxy bool) *zsw.Action {
-	return &zsw.Action{
+func NewRegProxy(proxy eos.AccountName, isProxy bool) *eos.Action {
+	return &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("regproxy"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{Actor: proxy, Permission: PN("active")},
 		},
-		ActionData: zsw.NewActionData(RegProxy{
+		ActionData: eos.NewActionData(RegProxy{
 			Proxy:   proxy,
 			IsProxy: isProxy,
 		}),
@@ -22,6 +22,6 @@ func NewRegProxy(proxy zsw.AccountName, isProxy bool) *zsw.Action {
 
 // RegProxy represents the `zswhq.system::regproxy` action
 type RegProxy struct {
-	Proxy   zsw.AccountName `json:"proxy"`
+	Proxy   eos.AccountName `json:"proxy"`
 	IsProxy bool            `json:"isproxy"`
 }

@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"bytes"
@@ -12,7 +12,7 @@ import (
 	"sort"
 	"time"
 
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	"github.com/eoscanada/eos-go/ecc"
 	"go.uber.org/zap"
 )
 

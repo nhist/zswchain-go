@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"github.com/streamingfast/logging"

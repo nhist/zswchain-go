@@ -1,15 +1,15 @@
-package zsw_test
+package eos_test
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
 
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
 func ExampleAPI_GetInfo() {
-	api := zsw.New(getAPIURL())
+	api := eos.New(getAPIURL())
 
 	info, err := api.GetInfo(context.Background())
 	if err != nil {

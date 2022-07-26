@@ -8,7 +8,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/zhongshuwen/zswchain-go"
+	"github.com/eoscanada/eos-go"
 )
 
 func Process(filename string) error {
@@ -81,8 +81,8 @@ func Process(filename string) error {
 			return err
 		}
 
-		d := zsw.NewDecoder(cnt)
-		var block *zsw.SignedBlock
+		d := eos.NewDecoder(cnt)
+		var block *eos.SignedBlock
 
 		if err := d.Decode(&block); err != nil {
 			return fmt.Errorf("decoding signed block: %w", err)

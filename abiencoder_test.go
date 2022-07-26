@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"bytes"
@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/tidwall/gjson"
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	"github.com/eoscanada/eos-go/ecc"
 )
 
 var abiString = `
@@ -213,7 +213,7 @@ var cangPinAbi = (`{
 							"type": "uint64"
 					 },
 					 {
-							"name": "zsw_id",
+							"name": "z5w_id",
 							"type": "uint128"
 					 },
 					 {
@@ -263,7 +263,7 @@ var cangPinAbi = (`{
 							"type": "name"
 					 },
 					 {
-							"name": "zsw_id",
+							"name": "z5w_id",
 							"type": "uint128"
 					 },
 					 {
@@ -403,7 +403,7 @@ var cangPinAbi = (`{
 							"type": "name"
 					 },
 					 {
-							"name": "zsw_id",
+							"name": "z5w_id",
 							"type": "uint128"
 					 },
 					 {
@@ -489,7 +489,7 @@ var cangPinAbi = (`{
 							"type": "name"
 					 },
 					 {
-							"name": "zsw_id",
+							"name": "z5w_id",
 							"type": "uint128"
 					 },
 					 {
@@ -527,7 +527,7 @@ var cangPinAbi = (`{
 							"type": "name"
 					 },
 					 {
-							"name": "zsw_id",
+							"name": "z5w_id",
 							"type": "uint128"
 					 },
 					 {
@@ -561,7 +561,7 @@ var cangPinAbi = (`{
 							"type": "uint64"
 					 },
 					 {
-							"name": "zsw_id",
+							"name": "z5w_id",
 							"type": "uint128"
 					 },
 					 {
@@ -603,7 +603,7 @@ var cangPinAbi = (`{
 							"type": "name"
 					 },
 					 {
-							"name": "zsw_id",
+							"name": "z5w_id",
 							"type": "uint128"
 					 },
 					 {
@@ -645,7 +645,7 @@ var cangPinAbi = (`{
 							"type": "name"
 					 },
 					 {
-							"name": "zsw_id",
+							"name": "z5w_id",
 							"type": "uint128"
 					 },
 					 {
@@ -699,7 +699,7 @@ var cangPinAbi = (`{
 				"base": "",
 				"fields": [
 					 {
-							"name": "zsw_id",
+							"name": "z5w_id",
 							"type": "uint128"
 					 },
 					 {
@@ -807,7 +807,7 @@ var cangPinAbi = (`{
 							"type": "name"
 					 },
 					 {
-							"name": "zsw_id",
+							"name": "z5w_id",
 							"type": "uint128"
 					 },
 					 {
@@ -859,7 +859,7 @@ var cangPinAbi = (`{
 							"type": "name"
 					 },
 					 {
-							"name": "zsw_id",
+							"name": "z5w_id",
 							"type": "uint128"
 					 },
 					 {
@@ -881,7 +881,7 @@ var cangPinAbi = (`{
 				"base": "",
 				"fields": [
 					 {
-							"name": "zsw_id",
+							"name": "z5w_id",
 							"type": "uint128"
 					 },
 					 {
@@ -941,7 +941,7 @@ var cangPinAbi = (`{
 				"base": "",
 				"fields": [
 					 {
-							"name": "zsw_id",
+							"name": "z5w_id",
 							"type": "uint128"
 					 },
 					 {
@@ -987,7 +987,7 @@ var cangPinAbi = (`{
 							"type": "name"
 					 },
 					 {
-							"name": "zsw_id",
+							"name": "z5w_id",
 							"type": "uint128"
 					 },
 					 {
@@ -1003,7 +1003,7 @@ var cangPinAbi = (`{
 							"type": "uint64"
 					 },
 					 {
-							"name": "reported_fees_zsw",
+							"name": "reported_fees_eos",
 							"type": "uint64"
 					 },
 					 {
@@ -1011,7 +1011,7 @@ var cangPinAbi = (`{
 							"type": "uint64"
 					 },
 					 {
-							"name": "uncollected_fees_zsw",
+							"name": "uncollected_fees_eos",
 							"type": "uint64"
 					 }
 				]
@@ -1375,7 +1375,7 @@ func TestABIEncoder_encodeMissingActionStructCangPin(t *testing.T) {
 		"authorizer": "zsw.admin",
 		"authorized_minter": "kxjdtestnew1",
 		"item_id": 55,
-		"zsw_id": "0x00000055",
+		"z5w_id": "0x00000055",
 		"item_config": 11,
 		"item_template_id": 33,
 		"max_supply": 9000000,

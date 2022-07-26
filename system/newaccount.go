@@ -1,41 +1,41 @@
 package system
 
 import (
-	"github.com/zhongshuwen/zswchain-go"
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	"github.com/eoscanada/eos-go"
+	"github.com/eoscanada/eos-go/ecc"
 )
 
 // NewNewAccount returns a `newaccount` action that lives on the
 // `zswhq.system` contract.
-func NewNewAccount(creator, newAccount zsw.AccountName, publicKey ecc.PublicKey) *zsw.Action {
-	return &zsw.Action{
+func NewNewAccount(creator, newAccount eos.AccountName, publicKey ecc.PublicKey) *eos.Action {
+	return &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("newaccount"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{Actor: creator, Permission: PN("active")},
 		},
-		ActionData: zsw.NewActionData(NewAccount{
+		ActionData: eos.NewActionData(NewAccount{
 			Creator: creator,
 			Name:    newAccount,
-			Owner: zsw.Authority{
+			Owner: eos.Authority{
 				Threshold: 1,
-				Keys: []zsw.KeyWeight{
+				Keys: []eos.KeyWeight{
 					{
 						PublicKey: publicKey,
 						Weight:    1,
 					},
 				},
-				Accounts: []zsw.PermissionLevelWeight{},
+				Accounts: []eos.PermissionLevelWeight{},
 			},
-			Active: zsw.Authority{
+			Active: eos.Authority{
 				Threshold: 1,
-				Keys: []zsw.KeyWeight{
+				Keys: []eos.KeyWeight{
 					{
 						PublicKey: publicKey,
 						Weight:    1,
 					},
 				},
-				Accounts: []zsw.PermissionLevelWeight{},
+				Accounts: []eos.PermissionLevelWeight{},
 			},
 		}),
 	}
@@ -44,22 +44,22 @@ func NewNewAccount(creator, newAccount zsw.AccountName, publicKey ecc.PublicKey)
 // NewDelegatedNewAccount returns a `newaccount` action that lives on the
 // `zswhq.system` contract. It is filled with an authority structure that
 // delegates full control of the new account to an already existing account.
-func NewDelegatedNewAccount(creator, newAccount zsw.AccountName, delegatedTo zsw.AccountName) *zsw.Action {
-	return &zsw.Action{
+func NewDelegatedNewAccount(creator, newAccount eos.AccountName, delegatedTo eos.AccountName) *eos.Action {
+	return &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("newaccount"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{Actor: creator, Permission: PN("active")},
 		},
-		ActionData: zsw.NewActionData(NewAccount{
+		ActionData: eos.NewActionData(NewAccount{
 			Creator: creator,
 			Name:    newAccount,
-			Owner: zsw.Authority{
+			Owner: eos.Authority{
 				Threshold: 1,
-				Keys:      []zsw.KeyWeight{},
-				Accounts: []zsw.PermissionLevelWeight{
-					zsw.PermissionLevelWeight{
-						Permission: zsw.PermissionLevel{
+				Keys:      []eos.KeyWeight{},
+				Accounts: []eos.PermissionLevelWeight{
+					eos.PermissionLevelWeight{
+						Permission: eos.PermissionLevel{
 							Actor:      delegatedTo,
 							Permission: PN("active"),
 						},
@@ -67,12 +67,12 @@ func NewDelegatedNewAccount(creator, newAccount zsw.AccountName, delegatedTo zsw
 					},
 				},
 			},
-			Active: zsw.Authority{
+			Active: eos.Authority{
 				Threshold: 1,
-				Keys:      []zsw.KeyWeight{},
-				Accounts: []zsw.PermissionLevelWeight{
-					zsw.PermissionLevelWeight{
-						Permission: zsw.PermissionLevel{
+				Keys:      []eos.KeyWeight{},
+				Accounts: []eos.PermissionLevelWeight{
+					eos.PermissionLevelWeight{
+						Permission: eos.PermissionLevel{
 							Actor:      delegatedTo,
 							Permission: PN("active"),
 						},
@@ -87,14 +87,14 @@ func NewDelegatedNewAccount(creator, newAccount zsw.AccountName, delegatedTo zsw
 // NewCustomNewAccount returns a `newaccount` action that lives on the
 // `zswhq.system` contract. You can specify your own `owner` and
 // `active` permissions.
-func NewCustomNewAccount(creator, newAccount zsw.AccountName, owner, active zsw.Authority) *zsw.Action {
-	return &zsw.Action{
+func NewCustomNewAccount(creator, newAccount eos.AccountName, owner, active eos.Authority) *eos.Action {
+	return &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("newaccount"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{Actor: creator, Permission: PN("active")},
 		},
-		ActionData: zsw.NewActionData(NewAccount{
+		ActionData: eos.NewActionData(NewAccount{
 			Creator: creator,
 			Name:    newAccount,
 			Owner:   owner,
@@ -107,8 +107,8 @@ func NewCustomNewAccount(creator, newAccount zsw.AccountName, owner, active zsw.
 // contract. It is one of the rare ones to be hard-coded into the
 // blockchain.
 type NewAccount struct {
-	Creator zsw.AccountName `json:"creator"`
-	Name    zsw.AccountName `json:"name"`
-	Owner   zsw.Authority   `json:"owner"`
-	Active  zsw.Authority   `json:"active"`
+	Creator eos.AccountName `json:"creator"`
+	Name    eos.AccountName `json:"name"`
+	Owner   eos.Authority   `json:"owner"`
+	Active  eos.Authority   `json:"active"`
 }

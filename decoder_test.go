@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"bytes"
@@ -13,7 +13,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	"github.com/eoscanada/eos-go/ecc"
 )
 
 func TestDecoder_Remaining(t *testing.T) {
@@ -564,7 +564,7 @@ func TestDecoder_Encode(t *testing.T) {
 		F15: blockts,
 		F16: Varuint32(999),
 		F17: true,
-		F18: NewZSWAsset(100000),
+		F18: NewEOSAsset(100000),
 	}
 
 	buf := new(bytes.Buffer)
@@ -595,7 +595,7 @@ func TestDecoder_Encode(t *testing.T) {
 	assert.Equal(t, true, s.F17)
 	assert.Equal(t, Int64(100000), s.F18.Amount)
 	assert.Equal(t, uint8(4), s.F18.Precision)
-	assert.Equal(t, "ZSWCC", s.F18.Symbol.Symbol)
+	assert.Equal(t, "EOSCC", s.F18.Symbol.Symbol)
 
 }
 

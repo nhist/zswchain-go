@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"bufio"
@@ -9,7 +9,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	"github.com/eoscanada/eos-go/ecc"
 )
 
 type Signer interface {

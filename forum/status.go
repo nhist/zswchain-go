@@ -1,18 +1,18 @@
 package forum
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
 // Status is an action to set a status update for a given account on the forum contract.
-func NewStatus(account zsw.AccountName, content string) *zsw.Action {
-	a := &zsw.Action{
+func NewStatus(account eos.AccountName, content string) *eos.Action {
+	a := &eos.Action{
 		Account: ForumAN,
 		Name:    ActN("status"),
-		Authorization: []zsw.PermissionLevel{
-			{Actor: account, Permission: zsw.PermissionName("active")},
+		Authorization: []eos.PermissionLevel{
+			{Actor: account, Permission: eos.PermissionName("active")},
 		},
-		ActionData: zsw.NewActionData(Status{
+		ActionData: eos.NewActionData(Status{
 			Account: account,
 			Content: content,
 		}),
@@ -22,6 +22,6 @@ func NewStatus(account zsw.AccountName, content string) *zsw.Action {
 
 // Status represents the `zswhq.forum::status` action.
 type Status struct {
-	Account zsw.AccountName `json:"account_name"`
+	Account eos.AccountName `json:"account_name"`
 	Content string          `json:"content"`
 }

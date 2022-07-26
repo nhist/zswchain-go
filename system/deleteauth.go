@@ -1,6 +1,6 @@
 package system
 
-import "github.com/zhongshuwen/zswchain-go"
+import "github.com/eoscanada/eos-go"
 
 // NewDeleteAuth creates an action from the `zswhq.system` contract
 // called `deleteauth`.
@@ -8,14 +8,14 @@ import "github.com/zhongshuwen/zswchain-go"
 // You cannot delete the `owner` or `active` permissions.  Also, if a
 // permission is still linked through a previous `updatelink` action,
 // you will need to `unlinkauth` first.
-func NewDeleteAuth(account zsw.AccountName, permission zsw.PermissionName) *zsw.Action {
-	a := &zsw.Action{
+func NewDeleteAuth(account eos.AccountName, permission eos.PermissionName) *eos.Action {
+	a := &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("deleteauth"),
-		Authorization: []zsw.PermissionLevel{
-			{Actor: account, Permission: zsw.PermissionName("active")},
+		Authorization: []eos.PermissionLevel{
+			{Actor: account, Permission: eos.PermissionName("active")},
 		},
-		ActionData: zsw.NewActionData(DeleteAuth{
+		ActionData: eos.NewActionData(DeleteAuth{
 			Account:    account,
 			Permission: permission,
 		}),
@@ -27,6 +27,6 @@ func NewDeleteAuth(account zsw.AccountName, permission zsw.PermissionName) *zsw.
 // DeleteAuth represents the native `deleteauth` action, reachable
 // through the `zswhq.system` contract.
 type DeleteAuth struct {
-	Account    zsw.AccountName    `json:"account"`
-	Permission zsw.PermissionName `json:"permission"`
+	Account    eos.AccountName    `json:"account"`
+	Permission eos.PermissionName `json:"permission"`
 }

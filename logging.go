@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"fmt"
@@ -7,11 +7,11 @@ import (
 	"go.uber.org/zap"
 )
 
-var traceEnabled = logging.IsTraceEnabled("zswchain-go", "github.com/zhongshuwen/zswchain-go")
+var traceEnabled = logging.IsTraceEnabled("eoschain-go", "github.com/eoscanada/eos-go")
 var zlog = zap.NewNop()
 
 func init() {
-	logging.Register("github.com/zhongshuwen/zswchain-go", &zlog)
+	logging.Register("github.com/eoscanada/eos-go", &zlog)
 }
 
 func EnableDebugLogging(l *zap.Logger) {

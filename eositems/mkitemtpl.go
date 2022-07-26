@@ -1,22 +1,22 @@
-package zswitems
+package eositems
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
-	"github.com/zhongshuwen/zswchain-go/zswattr"
+	eos "github.com/eoscanada/eos-go"
+	"github.com/eoscanada/eos-go/eosattr"
 )
 
-func NewMakeItemTemplate(authorizer zsw.AccountName, creator zsw.AccountName, zswId zsw.Uint128, itemTemplateId uint64, collectionId uint64, itemType uint32, schemaName zsw.Name, immutableMetadata zswattr.AttributeMap, itemExternalMetadataUrlTemplate string) *zsw.Action {
-	return &zsw.Action{
+func NewMakeItemTemplate(authorizer eos.AccountName, creator eos.AccountName, eosId eos.Uint128, itemTemplateId uint64, collectionId uint64, itemType uint32, schemaName eos.Name, immutableMetadata eosattr.AttributeMap, itemExternalMetadataUrlTemplate string) *eos.Action {
+	return &eos.Action{
 		Account: AN("zsw.items"),
 		Name:    ActN("mkitemtpl"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{Actor: authorizer, Permission: PN("active")},
 			{Actor: creator, Permission: PN("active")},
 		},
-		ActionData: zsw.NewActionData(MakeItemTemplate{
+		ActionData: eos.NewActionData(MakeItemTemplate{
 			Authorizer:                      authorizer,
 			Creator:                         creator,
-			ZswId:                           zswId,
+			ZswId:                           eosId,
 			ItemTemplateId:                  itemTemplateId,
 			CollectionId:                    collectionId,
 			ItemType:                        itemType,
@@ -28,13 +28,13 @@ func NewMakeItemTemplate(authorizer zsw.AccountName, creator zsw.AccountName, zs
 }
 
 type MakeItemTemplate struct {
-	Authorizer                      zsw.AccountName      `json:"authorizer"`
-	Creator                         zsw.AccountName      `json:"creator"`
-	ZswId                           zsw.Uint128          `json:"zsw_id"`
+	Authorizer                      eos.AccountName      `json:"authorizer"`
+	Creator                         eos.AccountName      `json:"creator"`
+	ZswId                           eos.Uint128          `json:"z5w_id"`
 	ItemTemplateId                  uint64               `json:"item_template_id"`
 	CollectionId                    uint64               `json:"collection_id"`
 	ItemType                        uint32               `json:"item_type"`
-	SchemaName                      zsw.Name             `json:"schema_name"`
-	ImmutableMetadata               zswattr.AttributeMap `json:"immutable_metadata"`
+	SchemaName                      eos.Name             `json:"schema_name"`
+	ImmutableMetadata               eosattr.AttributeMap `json:"immutable_metadata"`
 	ItemExternalMetadataUrlTemplate string               `json:"item_external_metadata_url_template"`
 }

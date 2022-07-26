@@ -1,4 +1,4 @@
-package zswattr
+package eosattr
 
 import (
 	"encoding/base64"
@@ -17,8 +17,8 @@ import (
 	"time"
 
 	"github.com/tidwall/gjson"
-	zsw "github.com/zhongshuwen/zswchain-go"
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	eos "github.com/eoscanada/eos-go"
+	"github.com/eoscanada/eos-go/ecc"
 )
 
 var symbolRegex = regexp.MustCompile("^[0-9]{1,2},[A-Z]{1,7}$")
@@ -48,25 +48,25 @@ func (n ScopeName) String() string      { return string(n) }
 type ZswCorePermissions uint64
 
 const (
-	ZSW_CORE_PERMS_ADMIN ZswCorePermissions = 1 << iota
-	ZSW_CORE_PERMS_SETCODE
-	ZSW_CORE_PERMS_SETABI
-	ZSW_CORE_PERMS_TRANSFER_TOKEN_TO_ANYONE
-	ZSW_CORE_PERMS_RECEIVE_TOKEN_FROM_ANYONE
-	ZSW_CORE_PERMS_TRANSFER_TOKEN_TO_CORE_CONTRACTS
-	ZSW_CORE_PERMS_RECEIVE_TOKEN_AS_CORE_CONTRACTS
-	ZSW_CORE_PERMS_CREATE_USER
-	ZSW_CORE_PERMS_UPDATE_AUTH
-	ZSW_CORE_PERMS_DELETE_AUTH
-	ZSW_CORE_PERMS_LINK_AUTH
-	ZSW_CORE_PERMS_UNLINK_AUTH
-	ZSW_CORE_PERMS_CANCEL_DELAY
-	ZSW_CORE_PERMS_CONFIRM_AUTHORIZE_USER_TX
-	ZSW_CORE_PERMS_CONFIRM_AUTHORIZE_USER_TRANSFER_ITEM
-	ZSW_CORE_PERMS_GENERAL_RESOURCES
-	ZSW_CORE_PERMS_REGISTER_PRODUCER
-	ZSW_CORE_PERMS_VOTE_PRODUCER
-	ZSW_CORE_PERMS_MISC_FUNCTIONS
+	EOS_CORE_PERMS_ADMIN ZswCorePermissions = 1 << iota
+	EOS_CORE_PERMS_SETCODE
+	EOS_CORE_PERMS_SETABI
+	EOS_CORE_PERMS_TRANSFER_TOKEN_TO_ANYONE
+	EOS_CORE_PERMS_RECEIVE_TOKEN_FROM_ANYONE
+	EOS_CORE_PERMS_TRANSFER_TOKEN_TO_CORE_CONTRACTS
+	EOS_CORE_PERMS_RECEIVE_TOKEN_AS_CORE_CONTRACTS
+	EOS_CORE_PERMS_CREATE_USER
+	EOS_CORE_PERMS_UPDATE_AUTH
+	EOS_CORE_PERMS_DELETE_AUTH
+	EOS_CORE_PERMS_LINK_AUTH
+	EOS_CORE_PERMS_UNLINK_AUTH
+	EOS_CORE_PERMS_CANCEL_DELAY
+	EOS_CORE_PERMS_CONFIRM_AUTHORIZE_USER_TX
+	EOS_CORE_PERMS_CONFIRM_AUTHORIZE_USER_TRANSFER_ITEM
+	EOS_CORE_PERMS_GENERAL_RESOURCES
+	EOS_CORE_PERMS_REGISTER_PRODUCER
+	EOS_CORE_PERMS_VOTE_PRODUCER
+	EOS_CORE_PERMS_MISC_FUNCTIONS
 )
 
 // end core permission flags
@@ -75,25 +75,25 @@ const (
 type ZswItemsPermissions uint64
 
 const (
-	ZSW_ITEMS_PERMS_AUTHORIZE_CREATE_COLLECTION ZswItemsPermissions = 1 << iota
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_COLLECTION
-	ZSW_ITEMS_PERMS_AUTHORIZE_CREATE_ITEM
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_ITEM
-	ZSW_ITEMS_PERMS_AUTHORIZE_MINT_ITEM
-	ZSW_ITEMS_PERMS_AUTHORIZE_CREATE_ISSUER
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_ISSUER
-	ZSW_ITEMS_PERMS_AUTHORIZE_CREATE_ROYALTY_USER
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_ROYALTY_USER
-	ZSW_ITEMS_PERMS_AUTHORIZE_CREATE_SCHEMA
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_SCHEMA
-	ZSW_ITEMS_PERMS_ADMIN
-	ZSW_ITEMS_PERMS_AUTHORIZE_CREATE_CUSTODIAN
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_CUSTODIAN
-	ZSW_ITEMS_PERMS_AUTHORIZE_MINT_TO_OTHER_CUSTODIANS
-	ZSW_ITEMS_PERMS_AUTHORIZE_MINT_TO_NULL_CUSTODIAN
-	ZSW_ITEMS_PERMS_AUTHORIZE_CREATE_ITEM_TEMPLATE
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_ITEM_TEMPLATE
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_ITEM_METADATA
+	EOS_ITEMS_PERMS_AUTHORIZE_CREATE_COLLECTION ZswItemsPermissions = 1 << iota
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_COLLECTION
+	EOS_ITEMS_PERMS_AUTHORIZE_CREATE_ITEM
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_ITEM
+	EOS_ITEMS_PERMS_AUTHORIZE_MINT_ITEM
+	EOS_ITEMS_PERMS_AUTHORIZE_CREATE_ISSUER
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_ISSUER
+	EOS_ITEMS_PERMS_AUTHORIZE_CREATE_ROYALTY_USER
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_ROYALTY_USER
+	EOS_ITEMS_PERMS_AUTHORIZE_CREATE_SCHEMA
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_SCHEMA
+	EOS_ITEMS_PERMS_ADMIN
+	EOS_ITEMS_PERMS_AUTHORIZE_CREATE_CUSTODIAN
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_CUSTODIAN
+	EOS_ITEMS_PERMS_AUTHORIZE_MINT_TO_OTHER_CUSTODIANS
+	EOS_ITEMS_PERMS_AUTHORIZE_MINT_TO_NULL_CUSTODIAN
+	EOS_ITEMS_PERMS_AUTHORIZE_CREATE_ITEM_TEMPLATE
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_ITEM_TEMPLATE
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_ITEM_METADATA
 )
 
 // end items permission flags
@@ -106,10 +106,10 @@ const (
 	CUSTODIAN_PERMS_TX_TO_SELF_CUSTODIAN
 	CUSTODIAN_PERMS_RECEIVE_FROM_NULL_CUSTODIAN
 	CUSTODIAN_PERMS_RECEIVE_FROM_ANY_CUSTODIAN
-	CUSTODIAN_PERMS_RECEIVE_FROM_ZSW_CUSTODIAN
+	CUSTODIAN_PERMS_RECEIVE_FROM_EOS_CUSTODIAN
 	CUSTODIAN_PERMS_SEND_TO_NULL_CUSTODIAN
 	CUSTODIAN_PERMS_SEND_TO_ANY_CUSTODIAN
-	CUSTODIAN_PERMS_SEND_TO_ZSW_CUSTODIAN
+	CUSTODIAN_PERMS_SEND_TO_EOS_CUSTODIAN
 )
 
 // end items custodian permission flags
@@ -127,7 +127,7 @@ const (
 //end items config
 type SafeString string
 
-func (ss *SafeString) UnmarshalBinary(d *zsw.Decoder) error {
+func (ss *SafeString) UnmarshalBinary(d *eos.Decoder) error {
 	s, e := d.SafeReadUTF8String()
 	if e != nil {
 		return e
@@ -372,7 +372,7 @@ func NewSymbolFromUint64(value uint64) (out Symbol) {
 
 func NameToSymbol(name Name) (Symbol, error) {
 	symbol := Symbol{}
-	value, err := zsw.StringToName(string(name))
+	value, err := eos.StringToName(string(name))
 	if err != nil {
 		return symbol, fmt.Errorf("name %s is invalid: %w", name, err)
 	}
@@ -443,7 +443,7 @@ func (s Symbol) ToName() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return zsw.NameToString(u), nil
+	return eos.NameToString(u), nil
 }
 
 func (s Symbol) String() string {
@@ -453,7 +453,7 @@ func (s Symbol) String() string {
 type SymbolCode uint64
 
 func NameToSymbolCode(name Name) (SymbolCode, error) {
-	value, err := zsw.StringToName(string(name))
+	value, err := eos.StringToName(string(name))
 	if err != nil {
 		return 0, fmt.Errorf("name %s is invalid: %w", name, err)
 	}
@@ -480,7 +480,7 @@ func StringToSymbolCode(str string) (SymbolCode, error) {
 }
 
 func (sc SymbolCode) ToName() string {
-	return zsw.NameToString(uint64(sc))
+	return eos.NameToString(uint64(sc))
 }
 
 func (sc SymbolCode) String() string {
@@ -503,9 +503,9 @@ func (sc SymbolCode) MarshalJSON() (data []byte, err error) {
 	return []byte(`"` + sc.String() + `"`), nil
 }
 
-// ZSWCCSymbol represents the standard ZSWCC symbol on the chain.  It's
+// EOSCCSymbol represents the standard EOSCC symbol on the chain.  It's
 // here just to speed up things.
-var ZSWCCSymbol = Symbol{Precision: 4, Symbol: "ZSWCC"}
+var EOSCCSymbol = Symbol{Precision: 4, Symbol: "EOSCC"}
 
 // REXSymbol represents the standard REX symbol on the chain.  It's
 // here just to speed up things.
@@ -516,8 +516,8 @@ var REXSymbol = Symbol{Precision: 4, Symbol: "REX"}
 // It's here just to speed up things.
 var TNTSymbol = Symbol{Precision: 4, Symbol: "TNT"}
 
-func NewZSWAsset(amount int64) Asset {
-	return Asset{Amount: Int64(amount), Symbol: ZSWCCSymbol}
+func NewEOSAsset(amount int64) Asset {
+	return Asset{Amount: Int64(amount), Symbol: EOSCCSymbol}
 }
 
 // NewAsset reads from a string an EOS asset.
@@ -527,7 +527,7 @@ func NewAsset(in string) (out Asset, err error) {
 	return NewAssetFromString(in)
 }
 
-// NewAssetFromString reads a string an decode it to an zsw.Asset
+// NewAssetFromString reads a string an decode it to an eos.Asset
 // structure if possible. The input must contains an amount and
 // a symbol. The precision is inferred based on the actual number
 // of decimals present.
@@ -544,8 +544,8 @@ func NewAssetFromString(in string) (out Asset, err error) {
 	return
 }
 
-func NewZSWAssetFromString(input string) (Asset, error) {
-	return NewFixedSymbolAssetFromString(ZSWCCSymbol, input)
+func NewEOSAssetFromString(input string) (Asset, error) {
+	return NewFixedSymbolAssetFromString(EOSCCSymbol, input)
 }
 
 func NewREXAssetFromString(input string) (Asset, error) {
@@ -746,7 +746,7 @@ type GetCodeResp struct {
 	AccountName AccountName `json:"account_name"`
 	CodeHash    string      `json:"code_hash"`
 	WASM        string      `json:"wasm"`
-	ABI         zsw.ABI     `json:"abi"`
+	ABI         eos.ABI     `json:"abi"`
 }
 
 type GetCodeHashResp struct {
@@ -756,7 +756,7 @@ type GetCodeHashResp struct {
 
 type GetABIResp struct {
 	AccountName AccountName `json:"account_name"`
-	ABI         zsw.ABI     `json:"abi"`
+	ABI         eos.ABI     `json:"abi"`
 }
 
 type ABIJSONToBinResp struct {
@@ -764,7 +764,7 @@ type ABIJSONToBinResp struct {
 }
 
 type ABIBinToJSONResp struct {
-	Args zsw.M `json:"args"`
+	Args eos.M `json:"args"`
 }
 
 // JSONTime
@@ -1209,7 +1209,7 @@ func (i *Uint64) UnmarshalJSON(data []byte) error {
 }
 
 /*
-func (i Uint64) MarshalBinary(encoder *zsw.Encoder) error {
+func (i Uint64) MarshalBinary(encoder *eos.Encoder) error {
 	return encoder.writeUint64N(uint64(i))
 }
 */
@@ -1564,13 +1564,13 @@ func (a *BaseVariant) UnmarshalJSON(data []byte, def *VariantDefinition) error {
 		// avoid an `new` memory allocation:
 		//
 		// ```
-		// name := zsw.Name("")
+		// name := eos.Name("")
 		// json.Unmarshal(data, &name)
 		// ```
 		//
 		// This would work without a problem. In reflection code however, I
 		// did not find how one can go from `reflect.Zero(typeGo)` (which is
-		// the equivalence of doing `name := zsw.Name("")`) and take the
+		// the equivalence of doing `name := eos.Name("")`) and take the
 		// pointer to it so it can be unmarshalled correctly.
 		//
 		// A played with various iteration, and nothing got it working. Maybe
@@ -1594,7 +1594,7 @@ func ptr(v reflect.Value) reflect.Value {
 	return pv
 }
 
-func (a *BaseVariant) UnmarshalBinaryVariant(decoder *zsw.Decoder, def *VariantDefinition) error {
+func (a *BaseVariant) UnmarshalBinaryVariant(decoder *eos.Decoder, def *VariantDefinition) error {
 	typeID, err := decoder.ReadUvarint32()
 	if err != nil {
 		return fmt.Errorf("unable to read variant type id: %w", err)
@@ -1621,13 +1621,13 @@ func (a *BaseVariant) UnmarshalBinaryVariant(decoder *zsw.Decoder, def *VariantD
 		// avoid an `new` memory allocation:
 		//
 		// ```
-		// name := zsw.Name("")
+		// name := eos.Name("")
 		// json.Unmarshal(data, &name)
 		// ```
 		//
 		// This would work without a problem. In reflection code however, I
 		// did not find how one can go from `reflect.Zero(typeGo)` (which is
-		// the equivalence of doing `name := zsw.Name("")`) and take the
+		// the equivalence of doing `name := eos.Name("")`) and take the
 		// pointer to it so it can be unmarshalled correctly.
 		//
 		// A played with various iteration, and nothing got it working. Maybe
@@ -1709,7 +1709,7 @@ func (a fcVariant) IsNil() bool {
 // ToNative transform the actual implementation, walking each sub-element like array
 // and object, turning everything along the way in Go primitives types.
 //
-// **Note** For `Int64` and `Uint64`, we return `zsw.Int64` and `zsw.Uint64` types
+// **Note** For `Int64` and `Uint64`, we return `eos.Int64` and `eos.Uint64` types
 //          so that JSON marshalling is done correctly for large numbers
 func (a fcVariant) ToNative() interface{} {
 	if a.TypeID == fcVariantNullType ||
@@ -1753,7 +1753,7 @@ func (a fcVariant) MustAsObject() fcVariantObject {
 	return a.Impl.(fcVariantObject)
 }
 
-func (a *fcVariant) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (a *fcVariant) UnmarshalBinary(decoder *eos.Decoder) error {
 	typeID, err := decoder.ReadUvarint32()
 	if err != nil {
 		return fmt.Errorf("unable to read fc variant type ID: %w", err)
@@ -1825,7 +1825,7 @@ func (o fcVariantArray) ToNative() interface{} {
 	return out
 }
 
-func (o *fcVariantArray) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (o *fcVariantArray) UnmarshalBinary(decoder *eos.Decoder) error {
 	elementCount, err := decoder.ReadUvarint64()
 	if err != nil {
 		return fmt.Errorf("unable to read length: %w", err)
@@ -1883,7 +1883,7 @@ func (o fcVariantObject) validateFields(nameToType map[string]fcVariantType) err
 	return nil
 }
 
-func (o *fcVariantObject) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (o *fcVariantObject) UnmarshalBinary(decoder *eos.Decoder) error {
 	elementCount, err := decoder.ReadUvarint64()
 	if err != nil {
 		return fmt.Errorf("unable to read length: %w", err)
@@ -1912,7 +1912,7 @@ func (o *fcVariantObject) UnmarshalBinary(decoder *zsw.Decoder) error {
 // FIXME: This one I'm unsure, is this correct at all?
 type fcVariantBlob Blob
 
-func (o *fcVariantBlob) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (o *fcVariantBlob) UnmarshalBinary(decoder *eos.Decoder) error {
 	var blob Blob
 	err := decoder.Decode(&blob)
 	if err != nil {
@@ -1923,7 +1923,7 @@ func (o *fcVariantBlob) UnmarshalBinary(decoder *zsw.Decoder) error {
 	return nil
 }
 
-var ZSWAttributeVariant = NewVariantDefinition([]VariantType{
+var EOSAttributeVariant = NewVariantDefinition([]VariantType{
 	{Name: "int8", Type: int8(0)},
 	{Name: "int16", Type: int16(0)},
 	{Name: "int32", Type: int32(0)},
@@ -1951,47 +1951,47 @@ var ZSWAttributeVariant = NewVariantDefinition([]VariantType{
 type InvalidTypeError struct {
 	Label        string
 	ExpectedType string
-	Attribute    *ZSWAttribute
+	Attribute    *EOSAttribute
 }
 
 func (c *InvalidTypeError) Error() string {
 	return fmt.Sprintf("received an unexpected type %T for metadata variant %T", c.ExpectedType, c.Attribute)
 }
 
-type AttributeMap map[string]*ZSWAttribute
+type AttributeMap map[string]*EOSAttribute
 
-type ZSWAttribute struct {
+type EOSAttribute struct {
 	*BaseVariant
 }
 
-func NewZSWAttribute(typeId string, value interface{}) *ZSWAttribute {
-	return &ZSWAttribute{
+func NewEOSAttribute(typeId string, value interface{}) *EOSAttribute {
+	return &EOSAttribute{
 		&BaseVariant{
-			TypeID: ZSWAttributeVariant.TypeID(typeId),
+			TypeID: EOSAttributeVariant.TypeID(typeId),
 			Impl:   value,
 		},
 	}
 }
 
-func ToZSWAttribute(value interface{}) *ZSWAttribute {
+func ToEOSAttribute(value interface{}) *EOSAttribute {
 	switch v := value.(type) {
 	case float32:
-		return NewZSWAttribute("float", v)
+		return NewEOSAttribute("float", v)
 	case float64:
-		return NewZSWAttribute("double", v)
+		return NewEOSAttribute("double", v)
 	case []int8, []int16, []int32, []int64, []uint8, []uint16, []uint32, []uint64, []string:
 		typeId := fmt.Sprintf("%v_VEC", strings.ToUpper(strings.ReplaceAll(fmt.Sprintf("%T", v), "[]", "")))
-		return NewZSWAttribute(typeId, v)
+		return NewEOSAttribute(typeId, v)
 	case []float32:
-		return NewZSWAttribute("FLOAT_VEC", v)
+		return NewEOSAttribute("FLOAT_VEC", v)
 	case []float64:
-		return NewZSWAttribute("DOUBLE_VEC", v)
+		return NewEOSAttribute("DOUBLE_VEC", v)
 	default:
-		return NewZSWAttribute(fmt.Sprintf("%T", v), v)
+		return NewEOSAttribute(fmt.Sprintf("%T", v), v)
 	}
 }
 
-func (m *ZSWAttribute) InvalidTypeError(expectedType string) *InvalidTypeError {
+func (m *EOSAttribute) InvalidTypeError(expectedType string) *InvalidTypeError {
 	return &InvalidTypeError{
 		Label:        fmt.Sprintf("received an unexpected type %T for variant %T", m.Impl, m),
 		ExpectedType: "int8",
@@ -1999,11 +1999,11 @@ func (m *ZSWAttribute) InvalidTypeError(expectedType string) *InvalidTypeError {
 	}
 }
 
-func (m *ZSWAttribute) String() string {
+func (m *EOSAttribute) String() string {
 	return fmt.Sprint(m.Impl)
 }
 
-func (m *ZSWAttribute) Int8() (int8, error) {
+func (m *EOSAttribute) Int8() (int8, error) {
 	switch v := m.Impl.(type) {
 	case int8:
 		return v, nil
@@ -2012,7 +2012,7 @@ func (m *ZSWAttribute) Int8() (int8, error) {
 	}
 }
 
-func (m *ZSWAttribute) Int16() (int16, error) {
+func (m *EOSAttribute) Int16() (int16, error) {
 	switch v := m.Impl.(type) {
 	case int16:
 		return v, nil
@@ -2021,7 +2021,7 @@ func (m *ZSWAttribute) Int16() (int16, error) {
 	}
 }
 
-func (m *ZSWAttribute) Int32() (int32, error) {
+func (m *EOSAttribute) Int32() (int32, error) {
 	switch v := m.Impl.(type) {
 	case int32:
 		return v, nil
@@ -2030,7 +2030,7 @@ func (m *ZSWAttribute) Int32() (int32, error) {
 	}
 }
 
-func (m *ZSWAttribute) Int64() (int64, error) {
+func (m *EOSAttribute) Int64() (int64, error) {
 	switch v := m.Impl.(type) {
 	case int64:
 		return v, nil
@@ -2039,7 +2039,7 @@ func (m *ZSWAttribute) Int64() (int64, error) {
 	}
 }
 
-func (m *ZSWAttribute) UInt8() (uint8, error) {
+func (m *EOSAttribute) UInt8() (uint8, error) {
 	switch v := m.Impl.(type) {
 	case uint8:
 		return v, nil
@@ -2048,7 +2048,7 @@ func (m *ZSWAttribute) UInt8() (uint8, error) {
 	}
 }
 
-func (m *ZSWAttribute) UInt16() (uint16, error) {
+func (m *EOSAttribute) UInt16() (uint16, error) {
 	switch v := m.Impl.(type) {
 	case uint16:
 		return v, nil
@@ -2057,7 +2057,7 @@ func (m *ZSWAttribute) UInt16() (uint16, error) {
 	}
 }
 
-func (m *ZSWAttribute) UInt32() (uint32, error) {
+func (m *EOSAttribute) UInt32() (uint32, error) {
 	switch v := m.Impl.(type) {
 	case uint32:
 		return v, nil
@@ -2066,7 +2066,7 @@ func (m *ZSWAttribute) UInt32() (uint32, error) {
 	}
 }
 
-func (m *ZSWAttribute) UInt64() (uint64, error) {
+func (m *EOSAttribute) UInt64() (uint64, error) {
 	switch v := m.Impl.(type) {
 	case uint64:
 		return v, nil
@@ -2075,7 +2075,7 @@ func (m *ZSWAttribute) UInt64() (uint64, error) {
 	}
 }
 
-func (m *ZSWAttribute) Float32() (float32, error) {
+func (m *EOSAttribute) Float32() (float32, error) {
 	switch v := m.Impl.(type) {
 	case float32:
 		return v, nil
@@ -2084,7 +2084,7 @@ func (m *ZSWAttribute) Float32() (float32, error) {
 	}
 }
 
-func (m *ZSWAttribute) Float64() (float64, error) {
+func (m *EOSAttribute) Float64() (float64, error) {
 	switch v := m.Impl.(type) {
 	case float64:
 		return v, nil
@@ -2093,7 +2093,7 @@ func (m *ZSWAttribute) Float64() (float64, error) {
 	}
 }
 
-func (m *ZSWAttribute) Int8Slice() ([]int8, error) {
+func (m *EOSAttribute) Int8Slice() ([]int8, error) {
 	switch v := m.Impl.(type) {
 	case []int8:
 		return v, nil
@@ -2102,7 +2102,7 @@ func (m *ZSWAttribute) Int8Slice() ([]int8, error) {
 	}
 }
 
-func (m *ZSWAttribute) Int16Slice() ([]int16, error) {
+func (m *EOSAttribute) Int16Slice() ([]int16, error) {
 	switch v := m.Impl.(type) {
 	case []int16:
 		return v, nil
@@ -2111,7 +2111,7 @@ func (m *ZSWAttribute) Int16Slice() ([]int16, error) {
 	}
 }
 
-func (m *ZSWAttribute) Int32Slice() ([]int32, error) {
+func (m *EOSAttribute) Int32Slice() ([]int32, error) {
 	switch v := m.Impl.(type) {
 	case []int32:
 		return v, nil
@@ -2120,7 +2120,7 @@ func (m *ZSWAttribute) Int32Slice() ([]int32, error) {
 	}
 }
 
-func (m *ZSWAttribute) Int64Slice() ([]int64, error) {
+func (m *EOSAttribute) Int64Slice() ([]int64, error) {
 	switch v := m.Impl.(type) {
 	case []int64:
 		return v, nil
@@ -2129,7 +2129,7 @@ func (m *ZSWAttribute) Int64Slice() ([]int64, error) {
 	}
 }
 
-func (m *ZSWAttribute) UInt8Slice() ([]uint8, error) {
+func (m *EOSAttribute) UInt8Slice() ([]uint8, error) {
 	switch v := m.Impl.(type) {
 	case []uint8:
 		return v, nil
@@ -2138,7 +2138,7 @@ func (m *ZSWAttribute) UInt8Slice() ([]uint8, error) {
 	}
 }
 
-func (m *ZSWAttribute) UInt16Slice() ([]uint16, error) {
+func (m *EOSAttribute) UInt16Slice() ([]uint16, error) {
 	switch v := m.Impl.(type) {
 	case []uint16:
 		return v, nil
@@ -2147,7 +2147,7 @@ func (m *ZSWAttribute) UInt16Slice() ([]uint16, error) {
 	}
 }
 
-func (m *ZSWAttribute) UInt32Slice() ([]uint32, error) {
+func (m *EOSAttribute) UInt32Slice() ([]uint32, error) {
 	switch v := m.Impl.(type) {
 	case []uint32:
 		return v, nil
@@ -2156,7 +2156,7 @@ func (m *ZSWAttribute) UInt32Slice() ([]uint32, error) {
 	}
 }
 
-func (m *ZSWAttribute) UInt64Slice() ([]uint64, error) {
+func (m *EOSAttribute) UInt64Slice() ([]uint64, error) {
 	switch v := m.Impl.(type) {
 	case []uint64:
 		return v, nil
@@ -2165,7 +2165,7 @@ func (m *ZSWAttribute) UInt64Slice() ([]uint64, error) {
 	}
 }
 
-func (m *ZSWAttribute) Float32Slice() ([]float32, error) {
+func (m *EOSAttribute) Float32Slice() ([]float32, error) {
 	switch v := m.Impl.(type) {
 	case []float32:
 		return v, nil
@@ -2174,7 +2174,7 @@ func (m *ZSWAttribute) Float32Slice() ([]float32, error) {
 	}
 }
 
-func (m *ZSWAttribute) Float64Slice() ([]float64, error) {
+func (m *EOSAttribute) Float64Slice() ([]float64, error) {
 	switch v := m.Impl.(type) {
 	case []float64:
 		return v, nil
@@ -2183,7 +2183,7 @@ func (m *ZSWAttribute) Float64Slice() ([]float64, error) {
 	}
 }
 
-func (m *ZSWAttribute) StringSlice() ([]string, error) {
+func (m *EOSAttribute) StringSlice() ([]string, error) {
 	switch v := m.Impl.(type) {
 	case []string:
 		return v, nil
@@ -2192,16 +2192,16 @@ func (m *ZSWAttribute) StringSlice() ([]string, error) {
 	}
 }
 
-// IsEqual evaluates if the two zswattr have the same types and values (deep compare)
-func (m *ZSWAttribute) IsEqual(m2 *ZSWAttribute) bool {
+// IsEqual evaluates if the two eosattr have the same types and values (deep compare)
+func (m *EOSAttribute) IsEqual(m2 *EOSAttribute) bool {
 
 	if m.TypeID != m2.TypeID {
-		log.Println("ZSWAttribute types inequal: ", m.TypeID, " vs ", m2.TypeID)
+		log.Println("EOSAttribute types inequal: ", m.TypeID, " vs ", m2.TypeID)
 		return false
 	}
 
 	if m.String() != m2.String() {
-		log.Println("ZSWAttribute Values.String() inequal: ", m.String(), " vs ", m2.String())
+		log.Println("EOSAttribute Values.String() inequal: ", m.String(), " vs ", m2.String())
 		return false
 	}
 
@@ -2209,19 +2209,19 @@ func (m *ZSWAttribute) IsEqual(m2 *ZSWAttribute) bool {
 }
 
 // MarshalJSON translates to []byte
-func (m *ZSWAttribute) MarshalJSON() ([]byte, error) {
-	return m.BaseVariant.MarshalJSON(ZSWAttributeVariant)
+func (m *EOSAttribute) MarshalJSON() ([]byte, error) {
+	return m.BaseVariant.MarshalJSON(EOSAttributeVariant)
 }
 
-// UnmarshalJSON translates ZSWAttributeVariant
-func (m *ZSWAttribute) UnmarshalJSON(data []byte) error {
-	return m.BaseVariant.UnmarshalJSON(data, ZSWAttributeVariant)
+// UnmarshalJSON translates EOSAttributeVariant
+func (m *EOSAttribute) UnmarshalJSON(data []byte) error {
+	return m.BaseVariant.UnmarshalJSON(data, EOSAttributeVariant)
 }
 
 // UnmarshalBinary ...
-func (m *ZSWAttribute) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (m *EOSAttribute) UnmarshalBinary(decoder *eos.Decoder) error {
 	if m.BaseVariant == nil {
 		m.BaseVariant = &BaseVariant{}
 	}
-	return m.BaseVariant.UnmarshalBinaryVariant(decoder, ZSWAttributeVariant)
+	return m.BaseVariant.UnmarshalBinaryVariant(decoder, EOSAttributeVariant)
 }

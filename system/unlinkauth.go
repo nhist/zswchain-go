@@ -1,23 +1,23 @@
 package system
 
-import "github.com/zhongshuwen/zswchain-go"
+import "github.com/eoscanada/eos-go"
 
 // NewUnlinkAuth creates an action from the `zswhq.system` contract
 // called `unlinkauth`.
 //
 // `unlinkauth` detaches a previously set permission from a
 // `code::actionName`. See `linkauth`.
-func NewUnlinkAuth(account, code zsw.AccountName, actionName zsw.ActionName) *zsw.Action {
-	a := &zsw.Action{
+func NewUnlinkAuth(account, code eos.AccountName, actionName eos.ActionName) *eos.Action {
+	a := &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("unlinkauth"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{
 				Actor:      account,
-				Permission: zsw.PermissionName("active"),
+				Permission: eos.PermissionName("active"),
 			},
 		},
-		ActionData: zsw.NewActionData(UnlinkAuth{
+		ActionData: eos.NewActionData(UnlinkAuth{
 			Account: account,
 			Code:    code,
 			Type:    actionName,
@@ -30,7 +30,7 @@ func NewUnlinkAuth(account, code zsw.AccountName, actionName zsw.ActionName) *zs
 // UnlinkAuth represents the native `unlinkauth` action, through the
 // system contract.
 type UnlinkAuth struct {
-	Account zsw.AccountName `json:"account"`
-	Code    zsw.AccountName `json:"code"`
-	Type    zsw.ActionName  `json:"type"`
+	Account eos.AccountName `json:"account"`
+	Code    eos.AccountName `json:"code"`
+	Type    eos.ActionName  `json:"type"`
 }

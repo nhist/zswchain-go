@@ -1,33 +1,33 @@
 package system
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
 // NewDelegateBW returns a `delegatebw` action that lives on the
 // `zswhq.system` contract.
-func NewDelegateBW(from, receiver zsw.AccountName, stakeCPU, stakeNet zsw.Asset, transfer bool) *zsw.Action {
-	return &zsw.Action{
+func NewDelegateBW(from, receiver eos.AccountName, stakeCPU, stakeNet eos.Asset, transfer bool) *eos.Action {
+	return &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("delegatebw"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{Actor: from, Permission: PN("active")},
 		},
-		ActionData: zsw.NewActionData(DelegateBW{
+		ActionData: eos.NewActionData(DelegateBW{
 			From:     from,
 			Receiver: receiver,
 			StakeNet: stakeNet,
 			StakeCPU: stakeCPU,
-			Transfer: zsw.Bool(transfer),
+			Transfer: eos.Bool(transfer),
 		}),
 	}
 }
 
 // DelegateBW represents the `zswhq.system::delegatebw` action.
 type DelegateBW struct {
-	From     zsw.AccountName `json:"from"`
-	Receiver zsw.AccountName `json:"receiver"`
-	StakeNet zsw.Asset       `json:"stake_net_quantity"`
-	StakeCPU zsw.Asset       `json:"stake_cpu_quantity"`
-	Transfer zsw.Bool        `json:"transfer"`
+	From     eos.AccountName `json:"from"`
+	Receiver eos.AccountName `json:"receiver"`
+	StakeNet eos.Asset       `json:"stake_net_quantity"`
+	StakeCPU eos.Asset       `json:"stake_cpu_quantity"`
+	Transfer eos.Bool        `json:"transfer"`
 }

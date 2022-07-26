@@ -1,18 +1,18 @@
 package forum
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
 // NewExpire is an action to expire a proposal ahead of its natural death.
-func NewExpire(proposer zsw.AccountName, proposalName zsw.Name) *zsw.Action {
-	a := &zsw.Action{
+func NewExpire(proposer eos.AccountName, proposalName eos.Name) *eos.Action {
+	a := &eos.Action{
 		Account: ForumAN,
 		Name:    ActN("expire"),
-		Authorization: []zsw.PermissionLevel{
-			{Actor: proposer, Permission: zsw.PermissionName("active")},
+		Authorization: []eos.PermissionLevel{
+			{Actor: proposer, Permission: eos.PermissionName("active")},
 		},
-		ActionData: zsw.NewActionData(Expire{
+		ActionData: eos.NewActionData(Expire{
 			ProposalName: proposalName,
 		}),
 	}
@@ -21,5 +21,5 @@ func NewExpire(proposer zsw.AccountName, proposalName zsw.Name) *zsw.Action {
 
 // Expire represents the `zswhq.forum::propose` action.
 type Expire struct {
-	ProposalName zsw.Name `json:"proposal_name"`
+	ProposalName eos.Name `json:"proposal_name"`
 }

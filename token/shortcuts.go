@@ -1,7 +1,7 @@
 package token
 
-import zsw "github.com/zhongshuwen/zswchain-go"
+import eos "github.com/eoscanada/eos-go"
 
-var AN = zsw.AN
-var PN = zsw.PN
-var ActN = zsw.ActN
+var AN = eos.AN
+var PN = eos.PN
+var ActN = eos.ActN

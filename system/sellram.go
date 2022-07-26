@@ -1,19 +1,19 @@
 package system
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
 // NewSellRAM will sell at current market price a given number of
 // bytes of RAM.
-func NewSellRAM(account zsw.AccountName, bytes uint64) *zsw.Action {
-	a := &zsw.Action{
+func NewSellRAM(account eos.AccountName, bytes uint64) *eos.Action {
+	a := &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("sellram"),
-		Authorization: []zsw.PermissionLevel{
-			{Actor: account, Permission: zsw.PermissionName("active")},
+		Authorization: []eos.PermissionLevel{
+			{Actor: account, Permission: eos.PermissionName("active")},
 		},
-		ActionData: zsw.NewActionData(SellRAM{
+		ActionData: eos.NewActionData(SellRAM{
 			Account: account,
 			Bytes:   bytes,
 		}),
@@ -23,6 +23,6 @@ func NewSellRAM(account zsw.AccountName, bytes uint64) *zsw.Action {
 
 // SellRAM represents the `zswhq.system::sellram` action.
 type SellRAM struct {
-	Account zsw.AccountName `json:"account"`
+	Account eos.AccountName `json:"account"`
 	Bytes   uint64          `json:"bytes"`
 }

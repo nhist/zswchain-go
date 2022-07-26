@@ -1,21 +1,21 @@
 package system
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
-func NewSetRAM(maxRAMSize uint64) *zsw.Action {
-	a := &zsw.Action{
+func NewSetRAM(maxRAMSize uint64) *eos.Action {
+	a := &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("setram"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{
 				Actor:      AN("zswhq"),
-				Permission: zsw.PermissionName("active"),
+				Permission: eos.PermissionName("active"),
 			},
 		},
-		ActionData: zsw.NewActionData(SetRAM{
-			MaxRAMSize: zsw.Uint64(maxRAMSize),
+		ActionData: eos.NewActionData(SetRAM{
+			MaxRAMSize: eos.Uint64(maxRAMSize),
 		}),
 	}
 	return a
@@ -23,5 +23,5 @@ func NewSetRAM(maxRAMSize uint64) *zsw.Action {
 
 // SetRAM represents the hard-coded `setram` action.
 type SetRAM struct {
-	MaxRAMSize zsw.Uint64 `json:"max_ram_size"`
+	MaxRAMSize eos.Uint64 `json:"max_ram_size"`
 }

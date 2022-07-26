@@ -1,45 +1,45 @@
 package ship
 
 import (
-	"github.com/zhongshuwen/zswchain-go"
+	"github.com/eoscanada/eos-go"
 )
 
 // Request
-var RequestVariant = zsw.NewVariantDefinition([]zsw.VariantType{
+var RequestVariant = eos.NewVariantDefinition([]eos.VariantType{
 	{"get_status_request_v0", (*GetStatusRequestV0)(nil)},
 	{"get_blocks_request_v0", (*GetBlocksRequestV0)(nil)},
 	{"get_blocks_ack_request_v0", (*GetBlocksAckRequestV0)(nil)},
 })
 
 type Request struct {
-	zsw.BaseVariant
+	eos.BaseVariant
 }
 
-func (r *Request) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (r *Request) UnmarshalBinary(decoder *eos.Decoder) error {
 	return r.BaseVariant.UnmarshalBinaryVariant(decoder, RequestVariant)
 }
 
 // Result
-var ResultVariant = zsw.NewVariantDefinition([]zsw.VariantType{
+var ResultVariant = eos.NewVariantDefinition([]eos.VariantType{
 	{"get_status_result_v0", (*GetStatusResultV0)(nil)},
 	{"get_blocks_result_v0", (*GetBlocksResultV0)(nil)},
 })
 
 type Result struct {
-	zsw.BaseVariant
+	eos.BaseVariant
 }
 
-func (r *Result) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (r *Result) UnmarshalBinary(decoder *eos.Decoder) error {
 	return r.BaseVariant.UnmarshalBinaryVariant(decoder, ResultVariant)
 }
 
 // TransactionTrace
-var TransactionTraceVariant = zsw.NewVariantDefinition([]zsw.VariantType{
+var TransactionTraceVariant = eos.NewVariantDefinition([]eos.VariantType{
 	{"transaction_trace_v0", (*TransactionTraceV0)(nil)},
 })
 
 type TransactionTrace struct {
-	zsw.BaseVariant
+	eos.BaseVariant
 }
 
 type TransactionTraceArray struct {
@@ -62,54 +62,54 @@ func (t *TransactionTraceArray) AsTransactionTracesV0() (out []*TransactionTrace
 	return out
 }
 
-func (r *TransactionTraceArray) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (r *TransactionTraceArray) UnmarshalBinary(decoder *eos.Decoder) error {
 	data, err := decoder.ReadByteArray()
 	if err != nil {
 		return err
 	}
-	return zsw.UnmarshalBinary(data, &r.Elem)
+	return eos.UnmarshalBinary(data, &r.Elem)
 }
 
-func (r *TransactionTrace) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (r *TransactionTrace) UnmarshalBinary(decoder *eos.Decoder) error {
 	return r.BaseVariant.UnmarshalBinaryVariant(decoder, TransactionTraceVariant)
 }
 
 // ActionTrace
-var ActionTraceVariant = zsw.NewVariantDefinition([]zsw.VariantType{
+var ActionTraceVariant = eos.NewVariantDefinition([]eos.VariantType{
 	{"action_trace_v0", (*ActionTraceV0)(nil)},
 })
 
 type ActionTrace struct {
-	zsw.BaseVariant
+	eos.BaseVariant
 }
 
-func (r *ActionTrace) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (r *ActionTrace) UnmarshalBinary(decoder *eos.Decoder) error {
 	return r.BaseVariant.UnmarshalBinaryVariant(decoder, ActionTraceVariant)
 }
 
 // PartialTransaction
-var PartialTransactionVariant = zsw.NewVariantDefinition([]zsw.VariantType{
+var PartialTransactionVariant = eos.NewVariantDefinition([]eos.VariantType{
 	{"partial_transaction_v0", (*PartialTransactionV0)(nil)},
 })
 
 type PartialTransaction struct {
-	zsw.BaseVariant
+	eos.BaseVariant
 }
 
-func (r *PartialTransaction) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (r *PartialTransaction) UnmarshalBinary(decoder *eos.Decoder) error {
 	return r.BaseVariant.UnmarshalBinaryVariant(decoder, PartialTransactionVariant)
 }
 
 // TableDelta
-var TableDeltaVariant = zsw.NewVariantDefinition([]zsw.VariantType{
+var TableDeltaVariant = eos.NewVariantDefinition([]eos.VariantType{
 	{"table_delta_v0", (*TableDeltaV0)(nil)},
 })
 
 type TableDelta struct {
-	zsw.BaseVariant
+	eos.BaseVariant
 }
 
-func (d *TableDelta) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (d *TableDelta) UnmarshalBinary(decoder *eos.Decoder) error {
 	return d.BaseVariant.UnmarshalBinaryVariant(decoder, TableDeltaVariant)
 }
 
@@ -117,12 +117,12 @@ type TableDeltaArray struct {
 	Elem []*TableDelta
 }
 
-func (d *TableDeltaArray) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (d *TableDeltaArray) UnmarshalBinary(decoder *eos.Decoder) error {
 	data, err := decoder.ReadByteArray()
 	if err != nil {
 		return err
 	}
-	return zsw.UnmarshalBinary(data, &d.Elem)
+	return eos.UnmarshalBinary(data, &d.Elem)
 }
 
 func (t *TableDeltaArray) AsTableDeltasV0() (out []*TableDeltaV0) {
@@ -142,28 +142,28 @@ func (t *TableDeltaArray) AsTableDeltasV0() (out []*TableDeltaV0) {
 }
 
 // Transaction
-var TransactionVariant = zsw.NewVariantDefinition([]zsw.VariantType{
-	{"transaction_id", (*zsw.Checksum256)(nil)},
-	{"packed_transaction", (*zsw.PackedTransaction)(nil)},
+var TransactionVariant = eos.NewVariantDefinition([]eos.VariantType{
+	{"transaction_id", (*eos.Checksum256)(nil)},
+	{"packed_transaction", (*eos.PackedTransaction)(nil)},
 })
 
 type Transaction struct {
-	zsw.BaseVariant
+	eos.BaseVariant
 }
 
-func (d *Transaction) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (d *Transaction) UnmarshalBinary(decoder *eos.Decoder) error {
 	return d.BaseVariant.UnmarshalBinaryVariant(decoder, TransactionVariant)
 }
 
 // ActionReceipt
-var ActionReceiptVariant = zsw.NewVariantDefinition([]zsw.VariantType{
+var ActionReceiptVariant = eos.NewVariantDefinition([]eos.VariantType{
 	{"action_receipt_v0", (*ActionReceiptV0)(nil)},
 })
 
 type ActionReceipt struct {
-	zsw.BaseVariant
+	eos.BaseVariant
 }
 
-func (r *ActionReceipt) UnmarshalBinary(decoder *zsw.Decoder) error {
+func (r *ActionReceipt) UnmarshalBinary(decoder *eos.Decoder) error {
 	return r.BaseVariant.UnmarshalBinaryVariant(decoder, ActionReceiptVariant)
 }

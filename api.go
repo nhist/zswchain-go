@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"bytes"
@@ -16,7 +16,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	"github.com/eoscanada/eos-go/ecc"
 )
 
 type API struct {

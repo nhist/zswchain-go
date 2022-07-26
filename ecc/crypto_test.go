@@ -183,10 +183,10 @@ MFkwEwYHKoZIzj0CAQYIKoEcz1UBgi0DQgAEVCZLZTdGzfogF3RKdz/8SXSNU3Zq
 LDrwFWSWWbiOlacoZI9DzcEj8//lPbhy0AGb50F2u9ZO8LSxk8QNPEffXg==
 -----END PUBLIC KEY-----
 	`
-	zswPublicKeyString, err := SM2PemToZSWPublicKeyString([]byte(encodedSm2PemPublicKey))
+	eosPublicKeyString, err := SM2PemToEOSPublicKeyString([]byte(encodedSm2PemPublicKey))
 	assert.NoError(t, err, "unexpected error decoding SM2 public key pem")
-	assert.Equal(t, "PUB_GM_5XYqnUzbW8MXx5gJbY7vcs6tZixXFp9HV3LgQNgwqx5bGduFHc", zswPublicKeyString)
-	realPublicKey, err := NewPublicKey(zswPublicKeyString)
+	assert.Equal(t, "PUB_GM_5XYqnUzbW8MXx5gJbY7vcs6tZixXFp9HV3LgQNgwqx5bGduFHc", eosPublicKeyString)
+	realPublicKey, err := NewPublicKey(eosPublicKeyString)
 	assert.NoError(t, err, "unexpected error decoding SM2 public key string")
 
 	digest, err := base64.StdEncoding.DecodeString("Av0fkx5xAjZE2X2iVfhGmdB0BmcptRrT72QOGurJzx4=")

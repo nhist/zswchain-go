@@ -1,20 +1,20 @@
-package zsw_test
+package eos_test
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
 
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
 func ExampleAPI_GetAccount() {
-	api := zsw.New(getAPIURL())
+	api := eos.New(getAPIURL())
 
-	account := zsw.AccountName("zsw.rex")
+	account := eos.AccountName("zsw.rex")
 	info, err := api.GetAccount(context.Background(), account)
 	if err != nil {
-		if err == zsw.ErrNotFound {
+		if err == eos.ErrNotFound {
 			fmt.Printf("unknown account: %s", account)
 			return
 		}

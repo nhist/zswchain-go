@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"bytes"
@@ -12,7 +12,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	"github.com/eoscanada/eos-go/ecc"
 )
 
 func TestP2PMessage_UnmarshalBinaryRead(t *testing.T) {
@@ -348,7 +348,7 @@ func TestBlockHeader_UnmarshalJSON(t *testing.T) {
 				assert.Nil(t, e.NewProducersV1)
 				assert.Len(t, e.HeaderExtensions, 1)
 
-				extension, err := e.HeaderExtensions[0].AsBlockHeaderExtension("ZSWCC")
+				extension, err := e.HeaderExtensions[0].AsBlockHeaderExtension("EOSCC")
 				require.NoError(t, err)
 				assert.NotNil(t, extension)
 				assert.IsType(t, &ProducerScheduleChangeExtension{}, extension)
@@ -451,8 +451,8 @@ func FixmeTestPackedTransaction_Unpack(t *testing.T) {
 }
 
 func unifiedDiff(t *testing.T, expectedContent, actualContent []byte) string {
-	file1 := "/tmp/zswchain-go-tests-expected"
-	file2 := "/tmp/zswchain-go-tests-actual"
+	file1 := "/tmp/eoschain-go-tests-expected"
+	file2 := "/tmp/eoschain-go-tests-actual"
 	err := ioutil.WriteFile(file1, prettifyJSON(expectedContent), 0600)
 	require.NoError(t, err)
 

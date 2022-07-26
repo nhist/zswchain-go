@@ -1,9 +1,9 @@
 package token
 
-import "github.com/zhongshuwen/zswchain-go"
+import "github.com/eoscanada/eos-go"
 
 func init() {
-	zsw.RegisterAction(AN("zswhq.token"), ActN("transfer"), Transfer{})
-	zsw.RegisterAction(AN("zswhq.token"), ActN("issue"), Issue{})
-	zsw.RegisterAction(AN("zswhq.token"), ActN("create"), Create{})
+	eos.RegisterAction(AN("zswhq.token"), ActN("transfer"), Transfer{})
+	eos.RegisterAction(AN("zswhq.token"), ActN("issue"), Issue{})
+	eos.RegisterAction(AN("zswhq.token"), ActN("create"), Create{})
 }

@@ -1,22 +1,22 @@
 package system
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	eos "github.com/eoscanada/eos-go"
+	"github.com/eoscanada/eos-go/ecc"
 )
 
 // NewSetPriv returns a `setpriv` action that lives on the
 // `zswhq.bios` contract. It should exist only when booting a new
 // network, as it is replaced using the `eos-bios` boot process by the
 // `zswhq.system` contract.
-func NewSetProds(producers []ProducerKey) *zsw.Action {
-	a := &zsw.Action{
+func NewSetProds(producers []ProducerKey) *eos.Action {
+	a := &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("setprods"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{Actor: AN("zswhq"), Permission: PN("active")},
 		},
-		ActionData: zsw.NewActionData(SetProds{
+		ActionData: eos.NewActionData(SetProds{
 			Schedule: producers,
 		}),
 	}
@@ -29,6 +29,6 @@ type SetProds struct {
 }
 
 type ProducerKey struct {
-	ProducerName    zsw.AccountName `json:"producer_name"`
+	ProducerName    eos.AccountName `json:"producer_name"`
 	BlockSigningKey ecc.PublicKey   `json:"block_signing_key"`
 }

@@ -1,20 +1,20 @@
 package system
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
-func NewSetRAMRate(bytesPerBlock uint16) *zsw.Action {
-	a := &zsw.Action{
+func NewSetRAMRate(bytesPerBlock uint16) *eos.Action {
+	a := &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("setram"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{
 				Actor:      AN("zswhq"),
-				Permission: zsw.PermissionName("active"),
+				Permission: eos.PermissionName("active"),
 			},
 		},
-		ActionData: zsw.NewActionData(SetRAMRate{
+		ActionData: eos.NewActionData(SetRAMRate{
 			BytesPerBlock: bytesPerBlock,
 		}),
 	}

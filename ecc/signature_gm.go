@@ -3,7 +3,7 @@ package ecc
 import (
 	"fmt"
 
-	"github.com/zhongshuwen/zswchain-go/libbsuite/btcutil/base58"
+	"github.com/eoscanada/eos-go/libbsuite/btcutil/base58"
 )
 
 type innerGMSignature struct {

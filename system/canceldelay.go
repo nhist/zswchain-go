@@ -1,6 +1,6 @@
 package system
 
-import "github.com/zhongshuwen/zswchain-go"
+import "github.com/eoscanada/eos-go"
 
 // NewCancelDelay creates an action from the `zswhq.system` contract
 // called `canceldelay`.
@@ -9,14 +9,14 @@ import "github.com/zhongshuwen/zswchain-go"
 // previously sent to the chain with a `delay_sec` larger than 0.  You
 // need to sign with cancelingAuth, to cancel a transaction signed
 // with that same authority.
-func NewCancelDelay(cancelingAuth zsw.PermissionLevel, transactionID zsw.Checksum256) *zsw.Action {
-	a := &zsw.Action{
+func NewCancelDelay(cancelingAuth eos.PermissionLevel, transactionID eos.Checksum256) *eos.Action {
+	a := &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("canceldelay"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			cancelingAuth,
 		},
-		ActionData: zsw.NewActionData(CancelDelay{
+		ActionData: eos.NewActionData(CancelDelay{
 			CancelingAuth: cancelingAuth,
 			TransactionID: transactionID,
 		}),
@@ -28,6 +28,6 @@ func NewCancelDelay(cancelingAuth zsw.PermissionLevel, transactionID zsw.Checksu
 // CancelDelay represents the native `canceldelay` action, through the
 // system contract.
 type CancelDelay struct {
-	CancelingAuth zsw.PermissionLevel `json:"canceling_auth"`
-	TransactionID zsw.Checksum256     `json:"trx_id"`
+	CancelingAuth eos.PermissionLevel `json:"canceling_auth"`
+	TransactionID eos.Checksum256     `json:"trx_id"`
 }

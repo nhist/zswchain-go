@@ -1,17 +1,17 @@
 package rex
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
-func NewDefundNetLoan(from zsw.AccountName, loanNumber uint64, amount zsw.Asset) *zsw.Action {
-	return &zsw.Action{
+func NewDefundNetLoan(from eos.AccountName, loanNumber uint64, amount eos.Asset) *eos.Action {
+	return &eos.Action{
 		Account: REXAN,
 		Name:    ActN("defnetloan"),
-		Authorization: []zsw.PermissionLevel{
-			{Actor: from, Permission: zsw.PermissionName("active")},
+		Authorization: []eos.PermissionLevel{
+			{Actor: from, Permission: eos.PermissionName("active")},
 		},
-		ActionData: zsw.NewActionData(DefundNetLoan{
+		ActionData: eos.NewActionData(DefundNetLoan{
 			From:       from,
 			LoanNumber: loanNumber,
 			Amount:     amount,
@@ -20,7 +20,7 @@ func NewDefundNetLoan(from zsw.AccountName, loanNumber uint64, amount zsw.Asset)
 }
 
 type DefundNetLoan struct {
-	From       zsw.AccountName
+	From       eos.AccountName
 	LoanNumber uint64
-	Amount     zsw.Asset
+	Amount     eos.Asset
 }

@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"encoding/hex"
@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"strconv"
 
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	"github.com/eoscanada/eos-go/ecc"
 )
 
 /*

@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"fmt"
@@ -16,11 +16,11 @@ func TestExtendedStringToName(t *testing.T) {
 	}{
 		{"zswhq.token", 0x5530ea033482a600, nil},
 		{"1,CUSD", 293455872769, nil},
-		{"4,ZSWCC", 1397703940, nil},
+		{"4,EOSCC", 1397703940, nil},
 		{"CUSD", 1146312003, nil},
 		{"KARMA", 280470110539, nil},
 		{"IQ", 20809, nil},
-		{"ZSWCC", 5459781, nil},
+		{"EOSCC", 5459781, nil},
 	}
 
 	for i, test := range tests {

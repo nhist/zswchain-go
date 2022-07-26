@@ -1,20 +1,20 @@
-package zsw_test
+package eos_test
 
 import (
 	"encoding/json"
 	"fmt"
 
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
 func ExamplePackedTransaction_Unpack() {
-	var packedTrx *zsw.PackedTransaction
+	var packedTrx *eos.PackedTransaction
 	err := json.Unmarshal(packedTrxData(), &packedTrx)
 	if err != nil {
 		panic(fmt.Errorf("unmarshaling to PackedTransaction: %w", err))
 	}
 
-	var signedTrx *zsw.SignedTransaction
+	var signedTrx *eos.SignedTransaction
 	signedTrx, err = packedTrx.Unpack()
 	if err != nil {
 		panic(fmt.Errorf("unpacking transaction: %w", err))

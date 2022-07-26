@@ -1,22 +1,22 @@
 package msig
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
 // NewApprove returns a `approve` action that lives on the
 // `eosio.msig` contract.
-func NewApprove(proposer zsw.AccountName, proposalName zsw.Name, level zsw.PermissionLevel) *zsw.Action {
-	return &zsw.Action{
-		Account:       zsw.AccountName("zswhq.msig"),
-		Name:          zsw.ActionName("approve"),
-		Authorization: []zsw.PermissionLevel{level},
-		ActionData:    zsw.NewActionData(Approve{proposer, proposalName, level}),
+func NewApprove(proposer eos.AccountName, proposalName eos.Name, level eos.PermissionLevel) *eos.Action {
+	return &eos.Action{
+		Account:       eos.AccountName("zswhq.msig"),
+		Name:          eos.ActionName("approve"),
+		Authorization: []eos.PermissionLevel{level},
+		ActionData:    eos.NewActionData(Approve{proposer, proposalName, level}),
 	}
 }
 
 type Approve struct {
-	Proposer     zsw.AccountName     `json:"proposer"`
-	ProposalName zsw.Name            `json:"proposal_name"`
-	Level        zsw.PermissionLevel `json:"level"`
+	Proposer     eos.AccountName     `json:"proposer"`
+	ProposalName eos.Name            `json:"proposal_name"`
+	Level        eos.PermissionLevel `json:"level"`
 }

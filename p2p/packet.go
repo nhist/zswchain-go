@@ -1,16 +1,16 @@
 package p2p
 
 import (
-	"github.com/zhongshuwen/zswchain-go"
+	"github.com/eoscanada/eos-go"
 )
 
 type Envelope struct {
 	Sender   *Peer
 	Receiver *Peer
-	Packet   *zsw.Packet `json:"envelope"`
+	Packet   *eos.Packet `json:"envelope"`
 }
 
-func NewEnvelope(sender *Peer, receiver *Peer, packet *zsw.Packet) *Envelope {
+func NewEnvelope(sender *Peer, receiver *Peer, packet *eos.Packet) *Envelope {
 	return &Envelope{
 		Sender:   sender,
 		Receiver: receiver,

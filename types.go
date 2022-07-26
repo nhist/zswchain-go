@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"encoding/base64"
@@ -18,7 +18,7 @@ import (
 	UUID "github.com/google/uuid"
 
 	"github.com/tidwall/gjson"
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	"github.com/eoscanada/eos-go/ecc"
 )
 
 var symbolRegex = regexp.MustCompile("^[0-9]{1,2},[A-Z]{1,7}$")
@@ -48,25 +48,25 @@ func (n ScopeName) String() string      { return string(n) }
 type ZswCorePermissions uint64
 
 const (
-	ZSW_CORE_PERMS_ADMIN ZswCorePermissions = 1 << iota
-	ZSW_CORE_PERMS_SETCODE
-	ZSW_CORE_PERMS_SETABI
-	ZSW_CORE_PERMS_TRANSFER_TOKEN_TO_ANYONE
-	ZSW_CORE_PERMS_RECEIVE_TOKEN_FROM_ANYONE
-	ZSW_CORE_PERMS_TRANSFER_TOKEN_TO_CORE_CONTRACTS
-	ZSW_CORE_PERMS_RECEIVE_TOKEN_AS_CORE_CONTRACTS
-	ZSW_CORE_PERMS_CREATE_USER
-	ZSW_CORE_PERMS_UPDATE_AUTH
-	ZSW_CORE_PERMS_DELETE_AUTH
-	ZSW_CORE_PERMS_LINK_AUTH
-	ZSW_CORE_PERMS_UNLINK_AUTH
-	ZSW_CORE_PERMS_CANCEL_DELAY
-	ZSW_CORE_PERMS_CONFIRM_AUTHORIZE_USER_TX
-	ZSW_CORE_PERMS_CONFIRM_AUTHORIZE_USER_TRANSFER_ITEM
-	ZSW_CORE_PERMS_GENERAL_RESOURCES
-	ZSW_CORE_PERMS_REGISTER_PRODUCER
-	ZSW_CORE_PERMS_VOTE_PRODUCER
-	ZSW_CORE_PERMS_MISC_FUNCTIONS
+	EOS_CORE_PERMS_ADMIN ZswCorePermissions = 1 << iota
+	EOS_CORE_PERMS_SETCODE
+	EOS_CORE_PERMS_SETABI
+	EOS_CORE_PERMS_TRANSFER_TOKEN_TO_ANYONE
+	EOS_CORE_PERMS_RECEIVE_TOKEN_FROM_ANYONE
+	EOS_CORE_PERMS_TRANSFER_TOKEN_TO_CORE_CONTRACTS
+	EOS_CORE_PERMS_RECEIVE_TOKEN_AS_CORE_CONTRACTS
+	EOS_CORE_PERMS_CREATE_USER
+	EOS_CORE_PERMS_UPDATE_AUTH
+	EOS_CORE_PERMS_DELETE_AUTH
+	EOS_CORE_PERMS_LINK_AUTH
+	EOS_CORE_PERMS_UNLINK_AUTH
+	EOS_CORE_PERMS_CANCEL_DELAY
+	EOS_CORE_PERMS_CONFIRM_AUTHORIZE_USER_TX
+	EOS_CORE_PERMS_CONFIRM_AUTHORIZE_USER_TRANSFER_ITEM
+	EOS_CORE_PERMS_GENERAL_RESOURCES
+	EOS_CORE_PERMS_REGISTER_PRODUCER
+	EOS_CORE_PERMS_VOTE_PRODUCER
+	EOS_CORE_PERMS_MISC_FUNCTIONS
 )
 
 // end core permission flags
@@ -75,25 +75,25 @@ const (
 type ZswItemsPermissions uint64
 
 const (
-	ZSW_ITEMS_PERMS_AUTHORIZE_CREATE_COLLECTION ZswItemsPermissions = 1 << iota
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_COLLECTION
-	ZSW_ITEMS_PERMS_AUTHORIZE_CREATE_ITEM
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_ITEM
-	ZSW_ITEMS_PERMS_AUTHORIZE_MINT_ITEM
-	ZSW_ITEMS_PERMS_AUTHORIZE_CREATE_ISSUER
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_ISSUER
-	ZSW_ITEMS_PERMS_AUTHORIZE_CREATE_ROYALTY_USER
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_ROYALTY_USER
-	ZSW_ITEMS_PERMS_AUTHORIZE_CREATE_SCHEMA
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_SCHEMA
-	ZSW_ITEMS_PERMS_ADMIN
-	ZSW_ITEMS_PERMS_AUTHORIZE_CREATE_CUSTODIAN
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_CUSTODIAN
-	ZSW_ITEMS_PERMS_AUTHORIZE_MINT_TO_OTHER_CUSTODIANS
-	ZSW_ITEMS_PERMS_AUTHORIZE_MINT_TO_NULL_CUSTODIAN
-	ZSW_ITEMS_PERMS_AUTHORIZE_CREATE_ITEM_TEMPLATE
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_ITEM_TEMPLATE
-	ZSW_ITEMS_PERMS_AUTHORIZE_MODIFY_ITEM_METADATA
+	EOS_ITEMS_PERMS_AUTHORIZE_CREATE_COLLECTION ZswItemsPermissions = 1 << iota
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_COLLECTION
+	EOS_ITEMS_PERMS_AUTHORIZE_CREATE_ITEM
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_ITEM
+	EOS_ITEMS_PERMS_AUTHORIZE_MINT_ITEM
+	EOS_ITEMS_PERMS_AUTHORIZE_CREATE_ISSUER
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_ISSUER
+	EOS_ITEMS_PERMS_AUTHORIZE_CREATE_ROYALTY_USER
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_ROYALTY_USER
+	EOS_ITEMS_PERMS_AUTHORIZE_CREATE_SCHEMA
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_SCHEMA
+	EOS_ITEMS_PERMS_ADMIN
+	EOS_ITEMS_PERMS_AUTHORIZE_CREATE_CUSTODIAN
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_CUSTODIAN
+	EOS_ITEMS_PERMS_AUTHORIZE_MINT_TO_OTHER_CUSTODIANS
+	EOS_ITEMS_PERMS_AUTHORIZE_MINT_TO_NULL_CUSTODIAN
+	EOS_ITEMS_PERMS_AUTHORIZE_CREATE_ITEM_TEMPLATE
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_ITEM_TEMPLATE
+	EOS_ITEMS_PERMS_AUTHORIZE_MODIFY_ITEM_METADATA
 )
 
 // end items permission flags
@@ -106,10 +106,10 @@ const (
 	CUSTODIAN_PERMS_TX_TO_SELF_CUSTODIAN
 	CUSTODIAN_PERMS_RECEIVE_FROM_NULL_CUSTODIAN
 	CUSTODIAN_PERMS_RECEIVE_FROM_ANY_CUSTODIAN
-	CUSTODIAN_PERMS_RECEIVE_FROM_ZSW_CUSTODIAN
+	CUSTODIAN_PERMS_RECEIVE_FROM_EOS_CUSTODIAN
 	CUSTODIAN_PERMS_SEND_TO_NULL_CUSTODIAN
 	CUSTODIAN_PERMS_SEND_TO_ANY_CUSTODIAN
-	CUSTODIAN_PERMS_SEND_TO_ZSW_CUSTODIAN
+	CUSTODIAN_PERMS_SEND_TO_EOS_CUSTODIAN
 )
 
 // end items custodian permission flags
@@ -503,9 +503,9 @@ func (sc SymbolCode) MarshalJSON() (data []byte, err error) {
 	return []byte(`"` + sc.String() + `"`), nil
 }
 
-// ZSWCCSymbol represents the standard ZSWCC symbol on the chain.  It's
+// EOSCCSymbol represents the standard EOSCC symbol on the chain.  It's
 // here just to speed up things.
-var ZSWCCSymbol = Symbol{Precision: 4, Symbol: "ZSWCC"}
+var EOSCCSymbol = Symbol{Precision: 4, Symbol: "EOSCC"}
 
 // REXSymbol represents the standard REX symbol on the chain.  It's
 // here just to speed up things.
@@ -516,8 +516,8 @@ var REXSymbol = Symbol{Precision: 4, Symbol: "REX"}
 // It's here just to speed up things.
 var TNTSymbol = Symbol{Precision: 4, Symbol: "TNT"}
 
-func NewZSWAsset(amount int64) Asset {
-	return Asset{Amount: Int64(amount), Symbol: ZSWCCSymbol}
+func NewEOSAsset(amount int64) Asset {
+	return Asset{Amount: Int64(amount), Symbol: EOSCCSymbol}
 }
 
 // NewAsset reads from a string an EOS asset.
@@ -527,7 +527,7 @@ func NewAsset(in string) (out Asset, err error) {
 	return NewAssetFromString(in)
 }
 
-// NewAssetFromString reads a string an decode it to an zsw.Asset
+// NewAssetFromString reads a string an decode it to an eos.Asset
 // structure if possible. The input must contains an amount and
 // a symbol. The precision is inferred based on the actual number
 // of decimals present.
@@ -544,8 +544,8 @@ func NewAssetFromString(in string) (out Asset, err error) {
 	return
 }
 
-func NewZSWAssetFromString(input string) (Asset, error) {
-	return NewFixedSymbolAssetFromString(ZSWCCSymbol, input)
+func NewEOSAssetFromString(input string) (Asset, error) {
+	return NewFixedSymbolAssetFromString(EOSCCSymbol, input)
 }
 
 func NewREXAssetFromString(input string) (Asset, error) {
@@ -1533,13 +1533,13 @@ func (a *BaseVariant) UnmarshalJSON(data []byte, def *VariantDefinition) error {
 		// avoid an `new` memory allocation:
 		//
 		// ```
-		// name := zsw.Name("")
+		// name := eos.Name("")
 		// json.Unmarshal(data, &name)
 		// ```
 		//
 		// This would work without a problem. In reflection code however, I
 		// did not find how one can go from `reflect.Zero(typeGo)` (which is
-		// the equivalence of doing `name := zsw.Name("")`) and take the
+		// the equivalence of doing `name := eos.Name("")`) and take the
 		// pointer to it so it can be unmarshalled correctly.
 		//
 		// A played with various iteration, and nothing got it working. Maybe
@@ -1590,13 +1590,13 @@ func (a *BaseVariant) UnmarshalBinaryVariant(decoder *Decoder, def *VariantDefin
 		// avoid an `new` memory allocation:
 		//
 		// ```
-		// name := zsw.Name("")
+		// name := eos.Name("")
 		// json.Unmarshal(data, &name)
 		// ```
 		//
 		// This would work without a problem. In reflection code however, I
 		// did not find how one can go from `reflect.Zero(typeGo)` (which is
-		// the equivalence of doing `name := zsw.Name("")`) and take the
+		// the equivalence of doing `name := eos.Name("")`) and take the
 		// pointer to it so it can be unmarshalled correctly.
 		//
 		// A played with various iteration, and nothing got it working. Maybe
@@ -1678,7 +1678,7 @@ func (a fcVariant) IsNil() bool {
 // ToNative transform the actual implementation, walking each sub-element like array
 // and object, turning everything along the way in Go primitives types.
 //
-// **Note** For `Int64` and `Uint64`, we return `zsw.Int64` and `zsw.Uint64` types
+// **Note** For `Int64` and `Uint64`, we return `eos.Int64` and `eos.Uint64` types
 //          so that JSON marshalling is done correctly for large numbers
 func (a fcVariant) ToNative() interface{} {
 	if a.TypeID == fcVariantNullType ||

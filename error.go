@@ -1,10 +1,10 @@
-package zsw
+package eos
 
 import (
 	"fmt"
 	"strings"
 
-	zswerr "github.com/zhongshuwen/zswchain-go/zswerr"
+	eoserr "github.com/eoscanada/eos-go/eoserr"
 )
 
 // APIError represents the errors as reported by the server
@@ -19,7 +19,7 @@ type APIError struct {
 	} `json:"error"`
 }
 
-func NewAPIError(httpCode int, msg string, e zswerr.Error) *APIError {
+func NewAPIError(httpCode int, msg string, e eoserr.Error) *APIError {
 	newError := &APIError{
 		Code:    httpCode,
 		Message: msg,
@@ -72,7 +72,7 @@ func (e APIError) Error() string {
 //  		"what": "unspecified",
 //  		"details": [
 //		 		{
-//		 			"message": "unknown key (<... redacted ...>): (0 zsw.rex)",
+//		 			"message": "unknown key (<... redacted ...>): (0 eos.rex)",
 //		 			"file": "http_plugin.cpp",
 //		 			"line_number": 589,
 //		 			"method": "handle_exception"

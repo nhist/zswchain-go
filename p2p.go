@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"encoding/binary"

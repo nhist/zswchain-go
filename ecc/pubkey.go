@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/zhongshuwen/gmsm/x509"
-	"github.com/zhongshuwen/zswchain-go/libbsuite/btcd/btcec"
-	"github.com/zhongshuwen/zswchain-go/libbsuite/btcutil/base58"
+	"github.com/eoscanada/eos-go/libbsuite/btcd/btcec"
+	"github.com/eoscanada/eos-go/libbsuite/btcutil/base58"
 )
 
 var PublicKeyPrefix = "PUB_"
@@ -146,7 +146,7 @@ func (p PublicKey) Validate() error {
 
 	return nil
 }
-func SM2PemToZSWPublicKeyString(sm2PublicKeyPemData []byte) (string, error) {
+func SM2PemToEOSPublicKeyString(sm2PublicKeyPemData []byte) (string, error) {
 	pem, err := x509.ReadPublicKeyFromPem(sm2PublicKeyPemData)
 	if err != nil {
 		return "", err

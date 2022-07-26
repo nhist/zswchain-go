@@ -1,18 +1,18 @@
 package system
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
 // NewSetalimits sets the account limits. Requires signature from `eosio@active` account.
-func NewSetalimits(account zsw.AccountName, ramBytes, netWeight, cpuWeight int64) *zsw.Action {
-	a := &zsw.Action{
+func NewSetalimits(account eos.AccountName, ramBytes, netWeight, cpuWeight int64) *eos.Action {
+	a := &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("setalimit"),
-		Authorization: []zsw.PermissionLevel{
-			{Actor: zsw.AccountName("zswhq"), Permission: PN("active")},
+		Authorization: []eos.PermissionLevel{
+			{Actor: eos.AccountName("zswhq"), Permission: PN("active")},
 		},
-		ActionData: zsw.NewActionData(Setalimits{
+		ActionData: eos.NewActionData(Setalimits{
 			Account:   account,
 			RAMBytes:  ramBytes,
 			NetWeight: netWeight,
@@ -24,7 +24,7 @@ func NewSetalimits(account zsw.AccountName, ramBytes, netWeight, cpuWeight int64
 
 // Setalimits represents the `zswhq.system::setalimit` action.
 type Setalimits struct {
-	Account   zsw.AccountName `json:"account"`
+	Account   eos.AccountName `json:"account"`
 	RAMBytes  int64           `json:"ram_bytes"`
 	NetWeight int64           `json:"net_weight"`
 	CPUWeight int64           `json:"cpu_weight"`

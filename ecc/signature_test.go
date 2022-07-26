@@ -56,7 +56,7 @@ func TestSignatureMarshalUnmarshal(t *testing.T) {
 	}{
 		{
 			name:          "K1",
-			signature:     "SIG_K1_KVp1bPmzswSvbcZCMENXbawKFVXPyYrUeJNZ9ChgWdhxLd5K8WtRmCtFY5cqVFgxjCZH8CwdNkxM3HBZ7EXeJmzcK78mHA",
+			signature:     "SIG_K1_KVp1bPmeosSvbcZCMENXbawKFVXPyYrUeJNZ9ChgWdhxLd5K8WtRmCtFY5cqVFgxjCZH8CwdNkxM3HBZ7EXeJmzcK78mHA",
 			testCanonical: true,
 		},
 		{
@@ -254,7 +254,7 @@ func TestSignatureVerify_WA(t *testing.T) {
 	assert.Equal(t, true, sig.Verify(hash, pubKey))
 }
 
-//to do this here because of a import cycle when use zsw.SigDigest
+//to do this here because of a import cycle when use eos.SigDigest
 func sigDigest(chainID, payload, contextFreeData []byte) []byte {
 	h := sha256.New()
 	if len(chainID) == 0 {

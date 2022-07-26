@@ -1,10 +1,10 @@
 package sudo
 
-import zsw "github.com/zhongshuwen/zswchain-go"
+import eos "github.com/eoscanada/eos-go"
 
 func init() {
-	zsw.RegisterAction(AN("zswhq.wrap"), ActN("exec"), Exec{})
+	eos.RegisterAction(AN("zswhq.wrap"), ActN("exec"), Exec{})
 }
 
-var AN = zsw.AN
-var ActN = zsw.ActN
+var AN = eos.AN
+var ActN = eos.ActN

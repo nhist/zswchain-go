@@ -1,9 +1,9 @@
-package zsw_test
+package eos_test
 
 import "os"
 
 func getAPIURL() string {
-	apiURL := os.Getenv("ZSW_CHAIN_API_URL")
+	apiURL := os.Getenv("EOS_CHAIN_API_URL")
 	if apiURL != "" {
 		return apiURL
 	}

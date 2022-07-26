@@ -1,15 +1,15 @@
 package token
 
-import zsw "github.com/zhongshuwen/zswchain-go"
+import eos "github.com/eoscanada/eos-go"
 
-func NewTransfer(from, to zsw.AccountName, quantity zsw.Asset, memo string) *zsw.Action {
-	return &zsw.Action{
+func NewTransfer(from, to eos.AccountName, quantity eos.Asset, memo string) *eos.Action {
+	return &eos.Action{
 		Account: AN("zswhq.token"),
 		Name:    ActN("transfer"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{Actor: from, Permission: PN("active")},
 		},
-		ActionData: zsw.NewActionData(Transfer{
+		ActionData: eos.NewActionData(Transfer{
 			From:     from,
 			To:       to,
 			Quantity: quantity,
@@ -20,8 +20,8 @@ func NewTransfer(from, to zsw.AccountName, quantity zsw.Asset, memo string) *zsw
 
 // Transfer represents the `transfer` struct on `zswhq.token` contract.
 type Transfer struct {
-	From     zsw.AccountName `json:"from"`
-	To       zsw.AccountName `json:"to"`
-	Quantity zsw.Asset       `json:"quantity"`
+	From     eos.AccountName `json:"from"`
+	To       eos.AccountName `json:"to"`
+	Quantity eos.Asset       `json:"quantity"`
 	Memo     string          `json:"memo"`
 }

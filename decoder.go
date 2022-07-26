@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"encoding/binary"
@@ -12,7 +12,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	"github.com/eoscanada/eos-go/ecc"
 	"go.uber.org/zap"
 )
 

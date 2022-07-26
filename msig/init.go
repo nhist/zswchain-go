@@ -1,17 +1,17 @@
 package msig
 
 import (
-	"github.com/zhongshuwen/zswchain-go"
+	"github.com/eoscanada/eos-go"
 )
 
 func init() {
-	zsw.RegisterAction(AN("zswhq.msig"), ActN("propose"), &Propose{})
-	zsw.RegisterAction(AN("zswhq.msig"), ActN("approve"), &Approve{})
-	zsw.RegisterAction(AN("zswhq.msig"), ActN("unapprove"), &Unapprove{})
-	zsw.RegisterAction(AN("zswhq.msig"), ActN("cancel"), &Cancel{})
-	zsw.RegisterAction(AN("zswhq.msig"), ActN("exec"), &Exec{})
+	eos.RegisterAction(AN("zswhq.msig"), ActN("propose"), &Propose{})
+	eos.RegisterAction(AN("zswhq.msig"), ActN("approve"), &Approve{})
+	eos.RegisterAction(AN("zswhq.msig"), ActN("unapprove"), &Unapprove{})
+	eos.RegisterAction(AN("zswhq.msig"), ActN("cancel"), &Cancel{})
+	eos.RegisterAction(AN("zswhq.msig"), ActN("exec"), &Exec{})
 }
 
-var AN = zsw.AN
-var PN = zsw.PN
-var ActN = zsw.ActN
+var AN = eos.AN
+var PN = eos.PN
+var ActN = eos.ActN

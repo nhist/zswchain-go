@@ -5,7 +5,7 @@ import (
 	"math"
 	"time"
 
-	"github.com/zhongshuwen/zswchain-go"
+	"github.com/eoscanada/eos-go"
 	"go.uber.org/zap"
 )
 
@@ -58,10 +58,10 @@ func (c *Client) read(peer *Peer, errChannel chan error) {
 		}
 
 		switch m := packet.P2PMessage.(type) {
-		case *zsw.GoAwayMessage:
+		case *eos.GoAwayMessage:
 			errChannel <- fmt.Errorf("GoAwayMessage reason %s: %w", m.Reason, err)
 
-		case *zsw.HandshakeMessage:
+		case *eos.HandshakeMessage:
 			if c.catchup == nil {
 				m.NodeID = peer.NodeID
 				m.P2PAddress = peer.Name
@@ -81,7 +81,7 @@ func (c *Client) read(peer *Peer, errChannel chan error) {
 				}
 				c.catchup.IsCatchingUp = true
 			}
-		case *zsw.NoticeMessage:
+		case *eos.NoticeMessage:
 			if c.catchup != nil {
 				pendingNum := m.KnownBlocks.Pending
 				if pendingNum > 0 {
@@ -92,7 +92,7 @@ func (c *Client) read(peer *Peer, errChannel chan error) {
 					}
 				}
 			}
-		case *zsw.SignedBlock:
+		case *eos.SignedBlock:
 
 			if c.catchup != nil {
 

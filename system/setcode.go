@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
-func NewSetContract(account zsw.AccountName, wasmPath, abiPath string) (out []*zsw.Action, err error) {
+func NewSetContract(account eos.AccountName, wasmPath, abiPath string) (out []*eos.Action, err error) {
 	codeAction, err := NewSetCode(account, wasmPath)
 	if err != nil {
 		return nil, err
@@ -19,10 +19,10 @@ func NewSetContract(account zsw.AccountName, wasmPath, abiPath string) (out []*z
 		return nil, err
 	}
 
-	return []*zsw.Action{codeAction, abiAction}, nil
+	return []*eos.Action{codeAction, abiAction}, nil
 }
 
-func NewSetContractContent(account zsw.AccountName, wasmContent, abiContent []byte) (out []*zsw.Action, err error) {
+func NewSetContractContent(account eos.AccountName, wasmContent, abiContent []byte) (out []*eos.Action, err error) {
 	codeAction := NewSetCodeContent(account, wasmContent)
 
 	abiAction, err := NewSetAbiContent(account, abiContent)
@@ -30,10 +30,10 @@ func NewSetContractContent(account zsw.AccountName, wasmContent, abiContent []by
 		return nil, err
 	}
 
-	return []*zsw.Action{codeAction, abiAction}, nil
+	return []*eos.Action{codeAction, abiAction}, nil
 }
 
-func NewSetCode(account zsw.AccountName, wasmPath string) (out *zsw.Action, err error) {
+func NewSetCode(account eos.AccountName, wasmPath string) (out *eos.Action, err error) {
 	codeContent, err := ioutil.ReadFile(wasmPath)
 	if err != nil {
 		return nil, err
@@ -41,26 +41,26 @@ func NewSetCode(account zsw.AccountName, wasmPath string) (out *zsw.Action, err 
 	return NewSetCodeContent(account, codeContent), nil
 }
 
-func NewSetCodeContent(account zsw.AccountName, codeContent []byte) *zsw.Action {
-	return &zsw.Action{
+func NewSetCodeContent(account eos.AccountName, codeContent []byte) *eos.Action {
+	return &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("setcode"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{
 				Actor:      account,
-				Permission: zsw.PermissionName("active"),
+				Permission: eos.PermissionName("active"),
 			},
 		},
-		ActionData: zsw.NewActionData(SetCode{
+		ActionData: eos.NewActionData(SetCode{
 			Account:   account,
 			VMType:    0,
 			VMVersion: 0,
-			Code:      zsw.HexBytes(codeContent),
+			Code:      eos.HexBytes(codeContent),
 		}),
 	}
 }
 
-func NewSetABI(account zsw.AccountName, abiPath string) (out *zsw.Action, err error) {
+func NewSetABI(account eos.AccountName, abiPath string) (out *eos.Action, err error) {
 	abiContent, err := ioutil.ReadFile(abiPath)
 	if err != nil {
 		return nil, err
@@ -69,79 +69,79 @@ func NewSetABI(account zsw.AccountName, abiPath string) (out *zsw.Action, err er
 	return NewSetAbiContent(account, abiContent)
 }
 
-func NewSetAbiContent(account zsw.AccountName, abiContent []byte) (out *zsw.Action, err error) {
+func NewSetAbiContent(account eos.AccountName, abiContent []byte) (out *eos.Action, err error) {
 	var abiPacked []byte
 	if len(abiContent) > 0 {
-		var abiDef zsw.ABI
+		var abiDef eos.ABI
 		if err := json.Unmarshal(abiContent, &abiDef); err != nil {
 			return nil, fmt.Errorf("unmarshal ABI file: %w", err)
 		}
 
-		abiPacked, err = zsw.MarshalBinary(abiDef)
+		abiPacked, err = eos.MarshalBinary(abiDef)
 		if err != nil {
 			return nil, fmt.Errorf("packing ABI: %w", err)
 		}
 	}
 
-	return &zsw.Action{
+	return &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("setabi"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{
 				Actor:      account,
-				Permission: zsw.PermissionName("active"),
+				Permission: eos.PermissionName("active"),
 			},
 		},
-		ActionData: zsw.NewActionData(SetABI{
+		ActionData: eos.NewActionData(SetABI{
 			Account: account,
-			ABI:     zsw.HexBytes(abiPacked),
+			ABI:     eos.HexBytes(abiPacked),
 		}),
 	}, nil
 }
 
-func NewSetAbiFromAbi(account zsw.AccountName, abi zsw.ABI) (out *zsw.Action, err error) {
+func NewSetAbiFromAbi(account eos.AccountName, abi eos.ABI) (out *eos.Action, err error) {
 	var abiPacked []byte
-	abiPacked, err = zsw.MarshalBinary(abi)
+	abiPacked, err = eos.MarshalBinary(abi)
 	if err != nil {
 		return nil, fmt.Errorf("packing ABI: %w", err)
 	}
 
-	return &zsw.Action{
+	return &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("setabi"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{
 				Actor:      account,
-				Permission: zsw.PermissionName("active"),
+				Permission: eos.PermissionName("active"),
 			},
 		},
-		ActionData: zsw.NewActionData(SetABI{
+		ActionData: eos.NewActionData(SetABI{
 			Account: account,
-			ABI:     zsw.HexBytes(abiPacked),
+			ABI:     eos.HexBytes(abiPacked),
 		}),
 	}, nil
 }
 
 // NewSetCodeTx is _deprecated_. Use NewSetContract instead, and build
 // your transaction yourself.
-func NewSetCodeTx(account zsw.AccountName, wasmPath, abiPath string) (out *zsw.Transaction, err error) {
+func NewSetCodeTx(account eos.AccountName, wasmPath, abiPath string) (out *eos.Transaction, err error) {
 	actions, err := NewSetContract(account, wasmPath, abiPath)
 	if err != nil {
 		return nil, err
 	}
-	return &zsw.Transaction{Actions: actions}, nil
+	return &eos.Transaction{Actions: actions}, nil
 }
 
 // SetCode represents the hard-coded `setcode` action.
 type SetCode struct {
-	Account   zsw.AccountName `json:"account"`
+	Account   eos.AccountName `json:"account"`
 	VMType    byte            `json:"vmtype"`
 	VMVersion byte            `json:"vmversion"`
-	Code      zsw.HexBytes    `json:"code"`
+	Code      eos.HexBytes    `json:"code"`
 }
 
 // SetABI represents the hard-coded `setabi` action.
 type SetABI struct {
-	Account zsw.AccountName `json:"account"`
-	ABI     zsw.HexBytes    `json:"abi"`
+	Account eos.AccountName `json:"account"`
+	ABI     eos.HexBytes    `json:"abi"`
 }

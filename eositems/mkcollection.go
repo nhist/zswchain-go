@@ -1,21 +1,21 @@
-package zswitems
+package eositems
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
-	"github.com/zhongshuwen/zswchain-go/zswattr"
+	eos "github.com/eoscanada/eos-go"
+	"github.com/eoscanada/eos-go/eosattr"
 )
 
-func NewMakeCollection(authorizer zsw.AccountName, zswId zsw.Uint128, collectionId uint64, collectionType uint32, creator zsw.AccountName, issuingPlatform zsw.AccountName, itemConfig uint32, secondaryMarketFee uint16, primaryMarketFee uint16, royaltyFeeCollector zsw.AccountName, maxSupply uint64, maxItems uint64, maxSupplyPerItem uint64, schemaName zsw.Name, authorizedMinters []zsw.AccountName, notifyAccounts []zsw.AccountName, authorizedMutableDataEditors []zsw.AccountName, metadata zswattr.AttributeMap, externalMetadataUrl string) *zsw.Action {
-	return &zsw.Action{
+func NewMakeCollection(authorizer eos.AccountName, eosId eos.Uint128, collectionId uint64, collectionType uint32, creator eos.AccountName, issuingPlatform eos.AccountName, itemConfig uint32, secondaryMarketFee uint16, primaryMarketFee uint16, royaltyFeeCollector eos.AccountName, maxSupply uint64, maxItems uint64, maxSupplyPerItem uint64, schemaName eos.Name, authorizedMinters []eos.AccountName, notifyAccounts []eos.AccountName, authorizedMutableDataEditors []eos.AccountName, metadata eosattr.AttributeMap, externalMetadataUrl string) *eos.Action {
+	return &eos.Action{
 		Account: AN("zsw.items"),
 		Name:    ActN("mkcollection"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{Actor: creator, Permission: PN("active")},
 			{Actor: authorizer, Permission: PN("active")},
 		},
-		ActionData: zsw.NewActionData(MakeCollection{
+		ActionData: eos.NewActionData(MakeCollection{
 			Authorizer:                   authorizer,
-			ZswId:                        zswId,
+			ZswId:                        eosId,
 			CollectionId:                 collectionId,
 			CollectionType:               collectionType,
 			Creator:                      creator,
@@ -38,23 +38,23 @@ func NewMakeCollection(authorizer zsw.AccountName, zswId zsw.Uint128, collection
 }
 
 type MakeCollection struct {
-	Authorizer                   zsw.AccountName      `json:"authorizer"`
-	ZswId                        zsw.Uint128          `json:"zsw_id"`
+	Authorizer                   eos.AccountName      `json:"authorizer"`
+	ZswId                        eos.Uint128          `json:"z5w_id"`
 	CollectionId                 uint64               `json:"collection_id"`
 	CollectionType               uint32               `json:"collection_type"`
-	Creator                      zsw.AccountName      `json:"creator"`
-	IssuingPlatform              zsw.AccountName      `json:"issuing_platform"`
+	Creator                      eos.AccountName      `json:"creator"`
+	IssuingPlatform              eos.AccountName      `json:"issuing_platform"`
 	ItemConfig                   uint32               `json:"item_config"`
 	SecondaryMarketFee           uint16               `json:"secondary_market_fee"`
 	PrimaryMarketFee             uint16               `json:"primary_market_fee"`
-	RoyaltyFeeCollector          zsw.AccountName      `json:"royalty_fee_collector"`
+	RoyaltyFeeCollector          eos.AccountName      `json:"royalty_fee_collector"`
 	MaxSupply                    uint64               `json:"max_supply"`
 	MaxItems                     uint64               `json:"max_items"`
 	MaxSupplyPerItem             uint64               `json:"max_supply_per_item"`
-	SchemaName                   zsw.Name             `json:"schema_name"`
-	AuthorizedMinters            []zsw.AccountName    `json:"authorized_minters"`
-	NotifyAccounts               []zsw.AccountName    `json:"notify_accounts"`
-	AuthorizedMutableDataEditors []zsw.AccountName    `json:"authorized_mutable_data_editors"`
-	Metadata                     zswattr.AttributeMap `json:"metadata"`
+	SchemaName                   eos.Name             `json:"schema_name"`
+	AuthorizedMinters            []eos.AccountName    `json:"authorized_minters"`
+	NotifyAccounts               []eos.AccountName    `json:"notify_accounts"`
+	AuthorizedMutableDataEditors []eos.AccountName    `json:"authorized_mutable_data_editors"`
+	Metadata                     eosattr.AttributeMap `json:"metadata"`
 	ExternalMetadataUrl          string               `json:"external_metadata_url"`
 }

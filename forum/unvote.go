@@ -1,18 +1,18 @@
 package forum
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
 // NewUnVote is an action representing the action to undoing a current vote
-func NewUnVote(voter zsw.AccountName, proposalName zsw.Name) *zsw.Action {
-	a := &zsw.Action{
+func NewUnVote(voter eos.AccountName, proposalName eos.Name) *eos.Action {
+	a := &eos.Action{
 		Account: ForumAN,
 		Name:    ActN("unvote"),
-		Authorization: []zsw.PermissionLevel{
-			{Actor: voter, Permission: zsw.PermissionName("active")},
+		Authorization: []eos.PermissionLevel{
+			{Actor: voter, Permission: eos.PermissionName("active")},
 		},
-		ActionData: zsw.NewActionData(UnVote{
+		ActionData: eos.NewActionData(UnVote{
 			Voter:        voter,
 			ProposalName: proposalName,
 		}),
@@ -22,6 +22,6 @@ func NewUnVote(voter zsw.AccountName, proposalName zsw.Name) *zsw.Action {
 
 // UnVote represents the `zswhq.forum::unvote` action.
 type UnVote struct {
-	Voter        zsw.AccountName `json:"voter"`
-	ProposalName zsw.Name        `json:"proposal_name"`
+	Voter        eos.AccountName `json:"voter"`
+	ProposalName eos.Name        `json:"proposal_name"`
 }

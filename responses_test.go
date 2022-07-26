@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"encoding/hex"
@@ -10,7 +10,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	"github.com/eoscanada/eos-go/ecc"
 )
 
 func TestUnmarshalAuthSequenceString(t *testing.T) {

@@ -7,7 +7,7 @@ import (
 	"math/big"
 
 	"github.com/zhongshuwen/gmsm/sm2"
-	"github.com/zhongshuwen/zswchain-go/libbsuite/btcutil/base58"
+	"github.com/eoscanada/eos-go/libbsuite/btcutil/base58"
 	"golang.org/x/crypto/ripemd160"
 )
 

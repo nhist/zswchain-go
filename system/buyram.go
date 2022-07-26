@@ -1,20 +1,20 @@
 package system
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
-func NewBuyRAM(payer, receiver zsw.AccountName, eosQuantity uint64) *zsw.Action {
-	a := &zsw.Action{
+func NewBuyRAM(payer, receiver eos.AccountName, eosQuantity uint64) *eos.Action {
+	a := &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("buyram"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{Actor: payer, Permission: PN("active")},
 		},
-		ActionData: zsw.NewActionData(BuyRAM{
+		ActionData: eos.NewActionData(BuyRAM{
 			Payer:    payer,
 			Receiver: receiver,
-			Quantity: zsw.NewZSWAsset(int64(eosQuantity)),
+			Quantity: eos.NewEOSAsset(int64(eosQuantity)),
 		}),
 	}
 	return a
@@ -22,7 +22,7 @@ func NewBuyRAM(payer, receiver zsw.AccountName, eosQuantity uint64) *zsw.Action 
 
 // BuyRAM represents the `zswhq.system::buyram` action.
 type BuyRAM struct {
-	Payer    zsw.AccountName `json:"payer"`
-	Receiver zsw.AccountName `json:"receiver"`
-	Quantity zsw.Asset       `json:"quant"` // specified in EOS
+	Payer    eos.AccountName `json:"payer"`
+	Receiver eos.AccountName `json:"receiver"`
+	Quantity eos.Asset       `json:"quant"` // specified in EOS
 }

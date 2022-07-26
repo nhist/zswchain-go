@@ -1,21 +1,21 @@
 package system
 
-import zsw "github.com/zhongshuwen/zswchain-go"
+import eos "github.com/eoscanada/eos-go"
 
 // NewSetPriv returns a `setpriv` action that lives on the
 // `zswhq.bios` contract. It should exist only when booting a new
 // network, as it is replaced using the `eos-bios` boot process by the
 // `zswhq.system` contract.
-func NewSetPriv(account zsw.AccountName) *zsw.Action {
-	a := &zsw.Action{
+func NewSetPriv(account eos.AccountName) *eos.Action {
+	a := &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("setpriv"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{Actor: AN("zswhq"), Permission: PN("active")},
 		},
-		ActionData: zsw.NewActionData(SetPriv{
+		ActionData: eos.NewActionData(SetPriv{
 			Account: account,
-			IsPriv:  zsw.Bool(true),
+			IsPriv:  eos.Bool(true),
 		}),
 	}
 	return a
@@ -23,6 +23,6 @@ func NewSetPriv(account zsw.AccountName) *zsw.Action {
 
 // SetPriv sets privileged account status. Used in the bios boot mechanism.
 type SetPriv struct {
-	Account zsw.AccountName `json:"account"`
-	IsPriv  zsw.Bool        `json:"is_priv"`
+	Account eos.AccountName `json:"account"`
+	IsPriv  eos.Bool        `json:"is_priv"`
 }

@@ -3,19 +3,19 @@ package ship
 import (
 	"fmt"
 
-	"github.com/zhongshuwen/zswchain-go"
+	"github.com/eoscanada/eos-go"
 )
 
 func NewGetBlocksAck(num uint32) []byte {
 	myReq := &Request{
-		BaseVariant: zsw.BaseVariant{
+		BaseVariant: eos.BaseVariant{
 			TypeID: RequestVariant.TypeID("get_blocks_ack_request_v0"),
 			Impl: &GetBlocksAckRequestV0{
 				NumMessages: num,
 			},
 		},
 	}
-	bytes, err := zsw.MarshalBinary(myReq)
+	bytes, err := eos.MarshalBinary(myReq)
 	if err != nil {
 		panic(err)
 	}
@@ -25,12 +25,12 @@ func NewGetBlocksAck(num uint32) []byte {
 
 func NewRequest(req *GetBlocksRequestV0) []byte {
 	myReq := &Request{
-		BaseVariant: zsw.BaseVariant{
+		BaseVariant: eos.BaseVariant{
 			TypeID: RequestVariant.TypeID("get_blocks_request_v0"),
 			Impl:   req,
 		},
 	}
-	bytes, err := zsw.MarshalBinary(myReq)
+	bytes, err := eos.MarshalBinary(myReq)
 	if err != nil {
 		panic(err)
 	}
@@ -40,7 +40,7 @@ func NewRequest(req *GetBlocksRequestV0) []byte {
 
 func ParseGetBlockResultV0(in []byte) (*GetBlocksResultV0, error) {
 	variant := &Result{}
-	if err := zsw.UnmarshalBinary(in, &variant); err != nil {
+	if err := eos.UnmarshalBinary(in, &variant); err != nil {
 		return nil, err
 	}
 

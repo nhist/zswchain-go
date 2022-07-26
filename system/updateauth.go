@@ -1,23 +1,23 @@
 package system
 
-import "github.com/zhongshuwen/zswchain-go"
+import "github.com/eoscanada/eos-go"
 
 // NewUpdateAuth creates an action from the `zswhq.system` contract
 // called `updateauth`.
 //
 // usingPermission needs to be `owner` if you want to modify the
 // `owner` authorization, otherwise `active` will do for the rest.
-func NewUpdateAuth(account zsw.AccountName, permission, parent zsw.PermissionName, authority zsw.Authority, usingPermission zsw.PermissionName) *zsw.Action {
-	a := &zsw.Action{
+func NewUpdateAuth(account eos.AccountName, permission, parent eos.PermissionName, authority eos.Authority, usingPermission eos.PermissionName) *eos.Action {
+	a := &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("updateauth"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{
 				Actor:      account,
 				Permission: usingPermission,
 			},
 		},
-		ActionData: zsw.NewActionData(UpdateAuth{
+		ActionData: eos.NewActionData(UpdateAuth{
 			Account:    account,
 			Permission: permission,
 			Parent:     parent,
@@ -34,8 +34,8 @@ func NewUpdateAuth(account zsw.AccountName, permission, parent zsw.PermissionNam
 //
 // If you change the `owner` permission, there should be no parent.
 type UpdateAuth struct {
-	Account    zsw.AccountName    `json:"account"`
-	Permission zsw.PermissionName `json:"permission"`
-	Parent     zsw.PermissionName `json:"parent"`
-	Auth       zsw.Authority      `json:"auth"`
+	Account    eos.AccountName    `json:"account"`
+	Permission eos.PermissionName `json:"permission"`
+	Parent     eos.PermissionName `json:"parent"`
+	Auth       eos.Authority      `json:"auth"`
 }

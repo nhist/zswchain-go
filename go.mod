@@ -1,4 +1,4 @@
-module github.com/zhongshuwen/zswchain-go
+module github.com/eoscanada/eos-go
 
 go 1.13
 

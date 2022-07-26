@@ -1,6 +1,6 @@
 package system
 
-import "github.com/zhongshuwen/zswchain-go"
+import "github.com/eoscanada/eos-go"
 
 // NewLinkAuth creates an action from the `zswhq.system` contract
 // called `linkauth`.
@@ -10,17 +10,17 @@ import "github.com/zhongshuwen/zswchain-go"
 // `requiredPermission` to sign transactions for `code::actionName`
 // and not rely on your `active` (which might be more sensitive as it
 // can sign anything) for the given operation.
-func NewLinkAuth(account, code zsw.AccountName, actionName zsw.ActionName, requiredPermission zsw.PermissionName) *zsw.Action {
-	a := &zsw.Action{
+func NewLinkAuth(account, code eos.AccountName, actionName eos.ActionName, requiredPermission eos.PermissionName) *eos.Action {
+	a := &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("linkauth"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{
 				Actor:      account,
-				Permission: zsw.PermissionName("active"),
+				Permission: eos.PermissionName("active"),
 			},
 		},
-		ActionData: zsw.NewActionData(LinkAuth{
+		ActionData: eos.NewActionData(LinkAuth{
 			Account:     account,
 			Code:        code,
 			Type:        actionName,
@@ -34,8 +34,8 @@ func NewLinkAuth(account, code zsw.AccountName, actionName zsw.ActionName, requi
 // LinkAuth represents the native `linkauth` action, through the
 // system contract.
 type LinkAuth struct {
-	Account     zsw.AccountName    `json:"account"`
-	Code        zsw.AccountName    `json:"code"`
-	Type        zsw.ActionName     `json:"type"`
-	Requirement zsw.PermissionName `json:"requirement"`
+	Account     eos.AccountName    `json:"account"`
+	Code        eos.AccountName    `json:"code"`
+	Type        eos.ActionName     `json:"type"`
+	Requirement eos.PermissionName `json:"requirement"`
 }

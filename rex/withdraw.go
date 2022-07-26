@@ -1,17 +1,17 @@
 package rex
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
-func NewWithdraw(owner zsw.AccountName, amount zsw.Asset) *zsw.Action {
-	return &zsw.Action{
+func NewWithdraw(owner eos.AccountName, amount eos.Asset) *eos.Action {
+	return &eos.Action{
 		Account: REXAN,
 		Name:    ActN("withdraw"),
-		Authorization: []zsw.PermissionLevel{
-			{Actor: owner, Permission: zsw.PermissionName("active")},
+		Authorization: []eos.PermissionLevel{
+			{Actor: owner, Permission: eos.PermissionName("active")},
 		},
-		ActionData: zsw.NewActionData(Withdraw{
+		ActionData: eos.NewActionData(Withdraw{
 			Owner:  owner,
 			Amount: amount,
 		}),
@@ -19,6 +19,6 @@ func NewWithdraw(owner zsw.AccountName, amount zsw.Asset) *zsw.Action {
 }
 
 type Withdraw struct {
-	Owner  zsw.AccountName
-	Amount zsw.Asset
+	Owner  eos.AccountName
+	Amount eos.Asset
 }

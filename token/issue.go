@@ -1,15 +1,15 @@
 package token
 
-import zsw "github.com/zhongshuwen/zswchain-go"
+import eos "github.com/eoscanada/eos-go"
 
-func NewIssue(to zsw.AccountName, quantity zsw.Asset, memo string) *zsw.Action {
-	return &zsw.Action{
+func NewIssue(to eos.AccountName, quantity eos.Asset, memo string) *eos.Action {
+	return &eos.Action{
 		Account: AN("zswhq.token"),
 		Name:    ActN("issue"),
-		Authorization: []zsw.PermissionLevel{
+		Authorization: []eos.PermissionLevel{
 			{Actor: to, Permission: PN("active")},
 		},
-		ActionData: zsw.NewActionData(Issue{
+		ActionData: eos.NewActionData(Issue{
 			To:       to,
 			Quantity: quantity,
 			Memo:     memo,
@@ -19,7 +19,7 @@ func NewIssue(to zsw.AccountName, quantity zsw.Asset, memo string) *zsw.Action {
 
 // Issue represents the `issue` struct on the `zswhq.token` contract.
 type Issue struct {
-	To       zsw.AccountName `json:"to"`
-	Quantity zsw.Asset       `json:"quantity"`
+	To       eos.AccountName `json:"to"`
+	Quantity eos.Asset       `json:"quantity"`
 	Memo     string          `json:"memo"`
 }

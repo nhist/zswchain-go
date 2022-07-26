@@ -1,19 +1,19 @@
 package system
 
 import (
-	zsw "github.com/zhongshuwen/zswchain-go"
+	eos "github.com/eoscanada/eos-go"
 )
 
 // NewClaimRewards will buy at current market price a given number of
 // bytes of RAM, and grant them to the `receiver` account.
-func NewClaimRewards(owner zsw.AccountName) *zsw.Action {
-	a := &zsw.Action{
+func NewClaimRewards(owner eos.AccountName) *eos.Action {
+	a := &eos.Action{
 		Account: AN("zswhq"),
 		Name:    ActN("claimrewards"),
-		Authorization: []zsw.PermissionLevel{
-			{Actor: owner, Permission: zsw.PermissionName("active")},
+		Authorization: []eos.PermissionLevel{
+			{Actor: owner, Permission: eos.PermissionName("active")},
 		},
-		ActionData: zsw.NewActionData(ClaimRewards{
+		ActionData: eos.NewActionData(ClaimRewards{
 			Owner: owner,
 		}),
 	}
@@ -22,5 +22,5 @@ func NewClaimRewards(owner zsw.AccountName) *zsw.Action {
 
 // ClaimRewards represents the `zswhq.system::claimrewards` action.
 type ClaimRewards struct {
-	Owner zsw.AccountName `json:"owner"`
+	Owner eos.AccountName `json:"owner"`
 }

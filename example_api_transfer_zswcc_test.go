@@ -1,4 +1,4 @@
-package zsw_test
+package eos_test
 
 import (
 	"context"
@@ -7,36 +7,36 @@ import (
 	"fmt"
 	"os"
 
-	zsw "github.com/zhongshuwen/zswchain-go"
-	"github.com/zhongshuwen/zswchain-go/token"
+	eos "github.com/eoscanada/eos-go"
+	"github.com/eoscanada/eos-go/token"
 )
 
 func ExampleAPI_PushTransaction_transfer_EOS() {
-	api := zsw.New(getAPIURL())
+	api := eos.New(getAPIURL())
 
-	keyBag := &zsw.KeyBag{}
+	keyBag := &eos.KeyBag{}
 	err := keyBag.ImportPrivateKey(context.Background(), readPrivateKey())
 	if err != nil {
 		panic(fmt.Errorf("import private key: %w", err))
 	}
 	api.SetSigner(keyBag)
 
-	from := zsw.AccountName("zswuser1")
-	to := zsw.AccountName("zswuser2")
-	quantity, err := zsw.NewZSWAssetFromString("1.0000 ZSWCC")
+	from := eos.AccountName("eosuser1")
+	to := eos.AccountName("eosuser2")
+	quantity, err := eos.NewEOSAssetFromString("1.0000 EOSCC")
 	memo := ""
 
 	if err != nil {
 		panic(fmt.Errorf("invalid quantity: %w", err))
 	}
 
-	txOpts := &zsw.TxOptions{}
+	txOpts := &eos.TxOptions{}
 	if err := txOpts.FillFromChain(context.Background(), api); err != nil {
 		panic(fmt.Errorf("filling tx opts: %w", err))
 	}
 
-	tx := zsw.NewTransaction([]*zsw.Action{token.NewTransfer(from, to, quantity, memo)}, txOpts)
-	signedTx, packedTx, err := api.SignTransaction(context.Background(), tx, txOpts.ChainID, zsw.CompressionNone)
+	tx := eos.NewTransaction([]*eos.Action{token.NewTransfer(from, to, quantity, memo)}, txOpts)
+	signedTx, packedTx, err := api.SignTransaction(context.Background(), tx, txOpts.ChainID, eos.CompressionNone)
 	if err != nil {
 		panic(fmt.Errorf("sign transaction: %w", err))
 	}
@@ -60,7 +60,7 @@ func ExampleAPI_PushTransaction_transfer_EOS() {
 func readPrivateKey() string {
 	// Right now, the key is read from an environment variable, it's an example after all.
 	// In a real-world scenario, would you probably integrate with a real wallet or something similar
-	envName := "ZSW_CHAIN_PRIVATE_KEY"
+	envName := "EOS_CHAIN_PRIVATE_KEY"
 	privateKey := os.Getenv(envName)
 	if privateKey == "" {
 		panic(fmt.Errorf("private key environment variable %q must be set", envName))

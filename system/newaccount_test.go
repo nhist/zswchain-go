@@ -8,8 +8,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	zsw "github.com/zhongshuwen/zswchain-go"
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	eos "github.com/eoscanada/eos-go"
+	"github.com/eoscanada/eos-go/ecc"
 )
 
 // TODO: Move this test to the `system` contract.. and take out
@@ -17,30 +17,30 @@ import (
 func TestActionNewAccount(t *testing.T) {
 	pubKey, err := ecc.NewPublicKey(ecc.PublicKeyPrefixCompat + "6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV")
 	require.NoError(t, err)
-	a := &zsw.Action{
-		Account: zsw.AccountName("zswhq"),
-		Name:    zsw.ActionName("newaccount"),
-		Authorization: []zsw.PermissionLevel{
+	a := &eos.Action{
+		Account: eos.AccountName("zswhq"),
+		Name:    eos.ActionName("newaccount"),
+		Authorization: []eos.PermissionLevel{
 			{
-				Actor:      zsw.AccountName("zswhq"),
-				Permission: zsw.PermissionName("active"),
+				Actor:      eos.AccountName("zswhq"),
+				Permission: eos.PermissionName("active"),
 			},
 		},
-		ActionData: zsw.NewActionData(NewAccount{
-			Creator: zsw.AccountName("zswhq"),
-			Name:    zsw.AccountName("abourget"),
-			Owner: zsw.Authority{
+		ActionData: eos.NewActionData(NewAccount{
+			Creator: eos.AccountName("zswhq"),
+			Name:    eos.AccountName("abourget"),
+			Owner: eos.Authority{
 				Threshold: 1,
-				Keys: []zsw.KeyWeight{
+				Keys: []eos.KeyWeight{
 					{
 						PublicKey: pubKey,
 						Weight:    1,
 					},
 				},
 			},
-			Active: zsw.Authority{
+			Active: eos.Authority{
 				Threshold: 1,
-				Keys: []zsw.KeyWeight{
+				Keys: []eos.KeyWeight{
 					{
 						PublicKey: pubKey,
 						Weight:    1,
@@ -49,11 +49,11 @@ func TestActionNewAccount(t *testing.T) {
 			},
 		}),
 	}
-	tx := &zsw.Transaction{
-		Actions: []*zsw.Action{a},
+	tx := &eos.Transaction{
+		Actions: []*eos.Action{a},
 	}
 
-	buf, err := zsw.MarshalBinary(tx)
+	buf, err := eos.MarshalBinary(tx)
 	// println(string(buf))
 	assert.NoError(t, err)
 
@@ -77,25 +77,25 @@ func TestActionNewAccount(t *testing.T) {
 }
 
 func TestMarshalTransactionAndSigned(t *testing.T) {
-	a := &zsw.Action{
-		Account: zsw.AccountName("zswhq"),
-		Name:    zsw.ActionName("newaccount"),
-		Authorization: []zsw.PermissionLevel{
+	a := &eos.Action{
+		Account: eos.AccountName("zswhq"),
+		Name:    eos.ActionName("newaccount"),
+		Authorization: []eos.PermissionLevel{
 			{
-				Actor:      zsw.AccountName("zswhq"),
-				Permission: zsw.PermissionName("active"),
+				Actor:      eos.AccountName("zswhq"),
+				Permission: eos.PermissionName("active"),
 			},
 		},
-		ActionData: zsw.NewActionData(NewAccount{
-			Creator: zsw.AccountName("zswhq"),
-			Name:    zsw.AccountName("abourget"),
+		ActionData: eos.NewActionData(NewAccount{
+			Creator: eos.AccountName("zswhq"),
+			Name:    eos.AccountName("abourget"),
 		}),
 	}
-	tx := &zsw.SignedTransaction{Transaction: &zsw.Transaction{
-		Actions: []*zsw.Action{a},
+	tx := &eos.SignedTransaction{Transaction: &eos.Transaction{
+		Actions: []*eos.Action{a},
 	}}
 
-	buf, err := zsw.MarshalBinary(tx)
+	buf, err := eos.MarshalBinary(tx)
 	assert.NoError(t, err)
 	// 00096e88 0000 0000 00000000 0000 0000 00
 	// actions: 01
@@ -111,47 +111,47 @@ func TestMarshalTransactionAndSigned(t *testing.T) {
 }
 
 func TestMarshalTransactionAndPack(t *testing.T) {
-	a := &zsw.Action{
-		Account: zsw.AccountName("zswhq"),
-		Name:    zsw.ActionName("newaccount"),
-		Authorization: []zsw.PermissionLevel{
+	a := &eos.Action{
+		Account: eos.AccountName("zswhq"),
+		Name:    eos.ActionName("newaccount"),
+		Authorization: []eos.PermissionLevel{
 			{
-				Actor:      zsw.AccountName("zswhq"),
-				Permission: zsw.PermissionName("active"),
+				Actor:      eos.AccountName("zswhq"),
+				Permission: eos.PermissionName("active"),
 			},
 		},
-		ActionData: zsw.NewActionData(NewAccount{
-			Creator: zsw.AccountName("zswhq"),
-			Name:    zsw.AccountName("abourget"),
+		ActionData: eos.NewActionData(NewAccount{
+			Creator: eos.AccountName("zswhq"),
+			Name:    eos.AccountName("abourget"),
 		}),
 	}
-	b := &zsw.Action{
-		Account: zsw.AccountName("zswhq"),
-		Name:    zsw.ActionName("transfer"),
-		Authorization: []zsw.PermissionLevel{
+	b := &eos.Action{
+		Account: eos.AccountName("zswhq"),
+		Name:    eos.ActionName("transfer"),
+		Authorization: []eos.PermissionLevel{
 			{
-				Actor:      zsw.AccountName("zswhq"),
-				Permission: zsw.PermissionName("active"),
+				Actor:      eos.AccountName("zswhq"),
+				Permission: eos.PermissionName("active"),
 			},
 		},
-		ActionData: zsw.NewActionData(NewAccount{
-			Creator: zsw.AccountName("zswhq"),
-			Name:    zsw.AccountName("cbillett"),
+		ActionData: eos.NewActionData(NewAccount{
+			Creator: eos.AccountName("zswhq"),
+			Name:    eos.AccountName("cbillett"),
 		}),
 	}
 
-	tx := &zsw.Transaction{
-		Actions: []*zsw.Action{a, b},
+	tx := &eos.Transaction{
+		Actions: []*eos.Action{a, b},
 	}
 
 	buf, err := json.Marshal(tx)
 	fmt.Println("Transaction: ", string(buf))
 
-	signedTx := &zsw.SignedTransaction{Transaction: tx}
+	signedTx := &eos.SignedTransaction{Transaction: tx}
 	buf, err = json.Marshal(signedTx)
 	fmt.Println("Signed Transaction: ", string(buf))
 
-	packedTx, err := signedTx.Pack(zsw.CompressionNone)
+	packedTx, err := signedTx.Pack(eos.CompressionNone)
 	assert.NoError(t, err)
 
 	buf, err = json.Marshal(packedTx)

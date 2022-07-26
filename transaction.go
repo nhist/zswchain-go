@@ -1,4 +1,4 @@
-package zsw
+package eos
 
 import (
 	"bytes"
@@ -17,7 +17,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/zhongshuwen/zswchain-go/ecc"
+	"github.com/eoscanada/eos-go/ecc"
 )
 
 type TransactionHeader struct {
@@ -57,8 +57,8 @@ func (tx *Transaction) SetExpiration(in time.Duration) {
 }
 
 const (
-	ZSW_ProtocolFeatureActivation BlockHeaderExtensionType = iota
-	ZSW_ProducerScheduleChangeExtension
+	EOS_ProtocolFeatureActivation BlockHeaderExtensionType = iota
+	EOS_ProducerScheduleChangeExtension
 )
 
 type BlockHeaderExtension interface {
@@ -71,9 +71,9 @@ type blockHeaderExtensionMap = map[BlockHeaderExtensionType]newBlockHeaderExtens
 type newBlockHeaderExtension func() BlockHeaderExtension
 
 var blockHeaderExtensions = map[string]blockHeaderExtensionMap{
-	"ZSWCC": {
-		ZSW_ProtocolFeatureActivation:       func() BlockHeaderExtension { return new(ProtocolFeatureActivationExtension) },
-		ZSW_ProducerScheduleChangeExtension: func() BlockHeaderExtension { return new(ProducerScheduleChangeExtension) },
+	"EOSCC": {
+		EOS_ProtocolFeatureActivation:       func() BlockHeaderExtension { return new(ProtocolFeatureActivationExtension) },
+		EOS_ProducerScheduleChangeExtension: func() BlockHeaderExtension { return new(ProducerScheduleChangeExtension) },
 	},
 }
 
@@ -167,7 +167,7 @@ type ProtocolFeatureActivationExtension struct {
 }
 
 func (e *ProtocolFeatureActivationExtension) TypeID() BlockHeaderExtensionType {
-	return ZSW_ProtocolFeatureActivation
+	return EOS_ProtocolFeatureActivation
 }
 
 // ProducerScheduleChangeExtension is a block header extension present in the signed
@@ -177,7 +177,7 @@ type ProducerScheduleChangeExtension struct {
 }
 
 func (e *ProducerScheduleChangeExtension) TypeID() BlockHeaderExtensionType {
-	return ZSW_ProducerScheduleChangeExtension
+	return EOS_ProducerScheduleChangeExtension
 }
 
 func unmarshalTypeError(value interface{}, reflectTypeHost interface{}, target interface{}, field string) *json.UnmarshalTypeError {

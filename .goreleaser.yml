@@ -1,4 +1,4 @@
-project_name: zswchain-go
+project_name: eoschain-go
 
 env_files:
   github_token: ~/.config/goreleaser/github_token
@@ -6,7 +6,7 @@ env_files:
 release:
   github:
     owner: zhongshuwen
-    name: zswchain-go
+    name: eoschain-go
   draft: true
   name_template: '{{.Tag}}'
   extra_files:
